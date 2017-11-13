@@ -17,8 +17,7 @@ class UtilisateurType extends AbstractType
         ->add('nom')
         ->add('prenom')
         ->add('dateInscription')
-        ->add('telephone')
-        ->add('type');
+        ->add('telephone');
     }
 
     /**

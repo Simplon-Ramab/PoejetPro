@@ -11,7 +11,6 @@
                 <th>Prenom</th>
                 <th>Dateinscription</th>
                 <th>Telephone</th>
-                <th>Type</th>
                 <th>Email</th>
                 <th>Actions</th>
             </tr>
@@ -24,7 +23,6 @@
                 <td>{{ utilisateur.prenom }}</td>
                 <td>{% if utilisateur.dateInscription %}{{ utilisateur.dateInscription|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ utilisateur.telephone }}</td>
-                <td>{{ utilisateur.type }}</td>
                 <td>{{ utilisateur.email }}</td>
                 <td>
                     <ul>

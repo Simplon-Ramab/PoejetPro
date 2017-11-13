@@ -125,4 +125,3 @@ class Commentaire
         return $this->datePublication;
     }
 }
-

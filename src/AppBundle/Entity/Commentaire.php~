@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Commentaires
+ * Commentaire
  *
- * @ORM\Table(name="commentaires")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CommentairesRepository")
+ * @ORM\Table(name="commentaire")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CommentaireRepository")
  */
-class Commentaires
+class Commentaire
 {
     /**
      * @var int
@@ -58,7 +58,7 @@ class Commentaires
      *
      * @param string $sujet
      *
-     * @return Commentaires
+     * @return Commentaire
      */
     public function setSujet($sujet)
     {
@@ -82,7 +82,7 @@ class Commentaires
      *
      * @param string $message
      *
-     * @return Commentaires
+     * @return Commentaire
      */
     public function setMessage($message)
     {
@@ -106,7 +106,7 @@ class Commentaires
      *
      * @param \DateTime $datePublication
      *
-     * @return Commentaires
+     * @return Commentaire
      */
     public function setDatePublication($datePublication)
     {
@@ -125,4 +125,3 @@ class Commentaires
         return $this->datePublication;
     }
 }
-
