@@ -45,7 +45,7 @@ class Evenement
     /**
      * @var string
      *
-     * @ORM\Column(name="heureDebut", type="string", length=255)
+     * @ORM\Column(name="heureDebut", type="datetime", length=255)
      */
     private $heureDebut;
 
@@ -62,6 +62,18 @@ class Evenement
      * @ORM\Column(name="place", type="integer")
      */
     private $place;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->setDateDebut(new \Datetime());
+        $this->setDateFin(new \Datetime());
+        $this->setHeureDebut(new \Datetime());
+        $this->setHeureFin(new \Datetime());
+    }
 
 
     /**

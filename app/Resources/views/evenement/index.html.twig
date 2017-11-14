@@ -21,18 +21,18 @@
             <tr>
                 <td><a href="{{ path('evenement_show', { 'id': evenement.id }) }}">{{ evenement.id }}</a></td>
                 <td>{{ evenement.titre }}</td>
-                <td>{% if evenement.dateDebut %}{{ evenement.dateDebut|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if evenement.dateFin %}{{ evenement.dateFin|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ evenement.heureDebut }}</td>
-                <td>{% if evenement.heureFin %}{{ evenement.heureFin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if evenement.dateDebut %}{{ evenement.dateDebut|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if evenement.dateFin %}{{ evenement.dateFin|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i:s') }}{% endif %}</td>
+                <td>{% if evenement.heureFin %}{{ evenement.heureFin|date('H:i:s') }}{% endif %}</td>
                 <td>{{ evenement.place }}</td>
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('evenement_show', { 'id': evenement.id }) }}">show</a>
+                            <a href="{{ path('evenement_show', { 'id': evenement.id }) }}">Voir</a>
                         </li>
                         <li>
-                            <a href="{{ path('evenement_edit', { 'id': evenement.id }) }}">edit</a>
+                            <a href="{{ path('evenement_edit', { 'id': evenement.id }) }}">Modifier</a>
                         </li>
                     </ul>
                 </td>
@@ -43,7 +43,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('evenement_new') }}">Create a new evenement</a>
+            <a href="{{ path('evenement_new') }}">Créer un événement</a>
         </li>
     </ul>
 {% endblock %}

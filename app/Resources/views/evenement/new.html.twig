@@ -5,12 +5,25 @@
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+        <input type="submit" value="Créer" />
     {{ form_end(form) }}
 
     <ul>
         <li>
-            <a href="{{ path('evenement_index') }}">Back to the list</a>
+            <a href="{{ path('evenement_index') }}">Retour aux événements </a>
         </li>
     </ul>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+
+$(function(){
+  $(document).ready(function() {
+
+});
+});
+
+
+</script>
 {% endblock %}

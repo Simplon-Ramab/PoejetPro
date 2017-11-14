@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <th>Heuredebut</th>
-                <td>{{ evenement.heureDebut }}</td>
+                <td>{% if evenement.heureDebut %}{{ evenement.heureDebut|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Heurefin</th>

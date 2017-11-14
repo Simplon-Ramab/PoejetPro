@@ -5,6 +5,9 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class EvenementType extends AbstractType
 {
@@ -13,7 +16,24 @@ class EvenementType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('titre')->add('dateDebut')->add('dateFin')->add('heureDebut')->add('heureFin')->add('place');
+        $builder
+        ->add('titre')
+        ->add('dateDebut', DateType::class, array(
+                    'widget' => 'single_text',
+                    'format' => 'dd-MM-yyyy',
+                    'label' => 'Date de debut'
+                  ))
+        ->add('dateFin', DateType::class, array(
+                    'widget' => 'single_text',
+                    'format' => 'dd-MM-yyyy',
+                    'label' => 'Date de fin'))
+        ->add('heureDebut', TimeType::class, array(
+                    'widget' => 'single_text',
+                    'label' => 'Heure de debut'))
+        ->add('heureFin', TimeType::class, array(
+                    'widget' => 'single_text',
+                    'label' => 'Heure fin'))
+        ->add('place');
     }
 
     /**
