@@ -19,3 +19,76 @@
         </li>
     </ul>
 {% endblock %}
+{% block javascripts %}
+<script>
+
+$(document).ready(function() {
+  $('.datepicker').pickadate({
+selectMonths: true,//Creates a dropdown to control month
+selectHours: true,//Creates a dropdown to control month
+selectYears: 15,//Creates a dropdown of 15 years to control year
+//The title label to use for the month nav buttons
+labelMonthNext: 'Mois suivant',
+labelMonthPrev: 'Mois précedent',
+//The title label to use for the dropdown selectors
+labelMonthSelect: 'Selectionner Mois',
+labelYearSelect: 'Selectionner l\'année',
+//Months and weekdays
+monthsFull: [ 'Janvier', 'Fevriér', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Decembre' ],
+monthsShort: [ 'Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Juil', 'Aoû', 'Sep', 'Oct', 'Nov', 'Dec' ],
+weekdaysFull: [ 'Dimanche', 'Lundi', 'Mardi', 'Mercrdi', 'Jeudi', 'Vendredi', 'Samedi' ],
+weekdaysShort: [ 'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam' ],
+//Materialize modified
+weekdaysLetter: [ 'S', 'L', 'M', 'M', 'J', 'V', 'S' ],
+//Today and clear
+today: 'Aujourd\'hui',
+clear: 'Effacer',
+close: 'Fermer',
+//The format to show on the `input` element
+format: 'dd/mm/yyyy'
+});
+
+
+$('.timepicker').pickatime({
+    default: 'Maintenant',
+    twelvehour: false, // change to 12 hour AM/PM clock from 24 hour
+    donetext: 'OK',
+    cleartext: 'Effacer',
+    canceltext: 'Fermer',
+    autoclose: false,
+    vibrate: true // vibrate the device when dragging clock hand
+
+});
+
+    });
+
+</script>
+{% endblock %}
+
+
+
+{% block stylesheets %}
+<style>
+
+.picker__date-display
+{
+  background-color: #26C6DA;
+}
+
+.picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected
+{
+  background-color: #26C6DA;
+}
+
+.picker__close, .picker__today, .picker__clear {
+    font-size: 1.1rem;
+    padding: 0 1rem;
+    color: #FFBB29;
+}
+
+.picker__nav--prev:hover { background-color: #FFBB29; }
+.picker__nav--next:hover { background-color: #FFBB29; }
+
+
+</style>
+{% endblock %}

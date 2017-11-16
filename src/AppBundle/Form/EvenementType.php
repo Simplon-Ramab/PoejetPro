@@ -21,17 +21,21 @@ class EvenementType extends AbstractType
         ->add('dateDebut', DateType::class, array(
                     'widget' => 'single_text',
                     'format' => 'dd-MM-yyyy',
+                    'attr' => ['class' => 'datepicker'],
                     'label' => 'Date de debut'
                   ))
         ->add('dateFin', DateType::class, array(
                     'widget' => 'single_text',
                     'format' => 'dd-MM-yyyy',
+                    'attr' => ['class' => 'datepicker'],
                     'label' => 'Date de fin'))
         ->add('heureDebut', TimeType::class, array(
                     'widget' => 'single_text',
+                    'attr' => ['class' => 'timepicker'],
                     'label' => 'Heure de debut'))
         ->add('heureFin', TimeType::class, array(
                     'widget' => 'single_text',
+                    'attr' => ['class' => 'timepicker'],
                     'label' => 'Heure fin'))
         ->add('place');
     }
