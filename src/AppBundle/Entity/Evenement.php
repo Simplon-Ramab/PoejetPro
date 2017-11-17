@@ -24,6 +24,13 @@ class Evenement
     /**
      * @var string
      *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="titre", type="string", length=255)
      */
     private $titre;
@@ -108,6 +115,31 @@ class Evenement
     public function getTitre()
     {
         return $this->titre;
+    }
+
+
+    /**
+     * Set titre
+     *
+     * @param string $description
+     *
+     * @return Evenement
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
 

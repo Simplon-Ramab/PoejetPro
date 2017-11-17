@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Image
@@ -27,6 +29,20 @@ class Image
      * @ORM\Column(name="nom", type="string", length=255)
      */
     private $nom;
+
+
+    /**
+    * @const path to cover directory
+    */
+    const COVER_DIRECTORY = '/uploads/cover/';
+
+    /**
+     * @var File
+     *
+     * @Assert\NotBlank(message="S'il vous plait, ajoutez une image de couverture")
+     * @Assert\File(mimeTypes={ "image/jpeg","image/png"  })
+     */
+    private $file;
 
 
     /**
@@ -62,4 +78,54 @@ class Image
     {
         return $this->nom;
     }
+
+
+    /**
+     * @return File
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param File $file
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * On part de notre class et on remonte jusqu'au dossier web
+     * Chemin physique sur le serveur du dossier d'upload
+     *
+     * @return string
+     */
+    public function getCoverUploadDirectory()
+    {
+        return __DIR__ . "/../../../../web" . self::COVER_DIRECTORY;
+    }
+
+
+    /**
+     * Chemin physique de l'image sur le serveur
+     * 
+     * @return string
+     */
+    public function getCoverAbsolutePath()
+    {
+        return $this->getCoverUploadDirectory() . $this->getNom();
+    }
+
+    /**
+     * Chemin de l'image via l'URL, servira dans pour l'affichage dans les templates twig
+     *
+     * @return string
+     */
+    public function getCoverWebPath()
+    {
+        return self::COVER_DIRECTORY . $this->getNom();
+    }
+
 }

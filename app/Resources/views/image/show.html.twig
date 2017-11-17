@@ -10,8 +10,7 @@
                 <td>{{ image.id }}</td>
             </tr>
             <tr>
-                <th>Nom</th>
-                <td>{{ image.nom }}</td>
+              <img src="{{ asset(image.getCoverWebPath) }}" />
             </tr>
         </tbody>
     </table>
@@ -29,4 +28,12 @@
             {{ form_end(delete_form) }}
         </li>
     </ul>
+{% endblock %}
+{% block stylesheets %}
+<style>
+
+img{
+  width: 10%;
+}
+</style>
 {% endblock %}

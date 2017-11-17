@@ -5,7 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Image;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Image controller.
@@ -44,6 +45,21 @@ class ImageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+          // $file contient l'image nouvellement uploadée
+          /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+          $file = $image->getFile();
+
+          // Génération d'un nom unique pour l'image (pour éviter les collisions à l'enregistrement)
+          $fileName = md5(uniqid()).'.'.$file->guessExtension();
+
+          // Déplacement l'image dans le dossier
+          $file->move(
+            $image->getCoverUploadDirectory(),
+            $fileName
+          );
+
+          // On met à jour la propriété nom
+          $image->setNom($fileName);
             $em = $this->getDoctrine()->getManager();
             $em->persist($image);
             $em->flush();

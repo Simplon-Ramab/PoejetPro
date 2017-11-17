@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 
 class EvenementType extends AbstractType
 {
@@ -37,7 +38,15 @@ class EvenementType extends AbstractType
                     'widget' => 'single_text',
                     'attr' => ['class' => 'timepicker'],
                     'label' => 'Heure fin'))
-        ->add('place');
+        ->add('place')
+        ->add('description', CKEditorType::class, array(
+                      'config' => array(
+                      'uiColor' => '#26C6DA',
+                      'toolbar' => 'basic',
+                      'defaultLanguage' => 'fr',
+                      'width' => '55%'
+      )
+    ));
     }
 
     /**

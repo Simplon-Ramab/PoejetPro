@@ -7,7 +7,6 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Nom</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -15,7 +14,7 @@
         {% for image in images %}
             <tr>
                 <td><a href="{{ path('image_show', { 'id': image.id }) }}">{{ image.id }}</a></td>
-                <td>{{ image.nom }}</td>
+                <td><img src="{{ asset(image.getCoverWebPath) }}" class="materialboxed" /></td>
                 <td>
                     <ul>
                         <li>
@@ -36,4 +35,12 @@
             <a href="{{ path('image_new') }}">Create a new image</a>
         </li>
     </ul>
+{% endblock %}
+{% block stylesheets %}
+<style>
+
+img{
+  width: 10%;
+}
+</style>
 {% endblock %}
