@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Evenement
@@ -70,6 +71,11 @@ class Evenement
      */
     private $place;
 
+    /**
+    * @ORM\OneToMany(targetEntity="Image", mappedBy="evenement")
+    */
+    private $images;
+
 
     /**
      * Constructor
@@ -80,6 +86,7 @@ class Evenement
         $this->setDateFin(new \Datetime());
         $this->setHeureDebut(new \Datetime());
         $this->setHeureFin(new \Datetime());
+        $this->images = new ArrayCollection();
     }
 
 
@@ -262,5 +269,39 @@ class Evenement
     public function getPlace()
     {
         return $this->place;
+    }
+
+    /**
+     * Add image
+     *
+     * @param \AppBundle\Entity\Image $image
+     *
+     * @return Evenement
+     */
+    public function addImage(\AppBundle\Entity\Image $image)
+    {
+        $this->images[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \AppBundle\Entity\Image $image
+     */
+    public function removeImage(\AppBundle\Entity\Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }

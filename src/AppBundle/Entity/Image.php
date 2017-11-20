@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Image
@@ -26,9 +27,26 @@ class Image
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=255)
+     * @ORM\Column(name="nomimage", type="string", length=255)
      */
-    private $nom;
+    private $nomimage;
+
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Evenement", inversedBy="evenements")
+    * @ORM\JoinColumn(name="evenement_id", referencedColumnName="id")
+    */
+    private $evenement;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->evenements = new ArrayCollection();
+    }
+
+
 
 
     /**
@@ -56,27 +74,27 @@ class Image
     }
 
     /**
-     * Set nom
+     * Set nomimage
      *
-     * @param string $nom
+     * @param string $nomimage
      *
      * @return Image
      */
-    public function setNom($nom)
+    public function setNomimage($nomimage)
     {
-        $this->nom = $nom;
+        $this->nomimage = $nomimage;
 
         return $this;
     }
 
     /**
-     * Get nom
+     * Get nomimage
      *
      * @return string
      */
-    public function getNom()
+    public function getNomimage()
     {
-        return $this->nom;
+        return $this->nomimage;
     }
 
 
@@ -115,7 +133,7 @@ class Image
      */
     public function getCoverAbsolutePath()
     {
-        return $this->getCoverUploadDirectory() . $this->getNom();
+        return $this->getCoverUploadDirectory() . $this->getNomimage();
     }
 
     /**
@@ -125,7 +143,65 @@ class Image
      */
     public function getCoverWebPath()
     {
-        return self::COVER_DIRECTORY . $this->getNom();
+        return self::COVER_DIRECTORY . $this->getNomimage();
     }
 
+
+    /**
+     * Set evenement
+     *
+     * @param \AppBundle\Entity\Evenement $evenement
+     *
+     * @return Image
+     */
+    public function setEvenement(\AppBundle\Entity\Evenement $evenement = null)
+    {
+        $this->evenement = $evenement;
+
+        return $this;
+    }
+
+    /**
+     * Get evenement
+     *
+     * @return \AppBundle\Entity\Evenement
+     */
+    public function getEvenement()
+    {
+        return $this->evenement;
+    }
+
+    /**
+     * Add evenement
+     *
+     * @param \AppBundle\Entity\Evenement $evenement
+     *
+     * @return Image
+     */
+    public function addEvenement(\AppBundle\Entity\Evenement $evenement)
+    {
+        $this->evenements[] = $evenement;
+
+        return $this;
+    }
+
+    /**
+     * Remove evenement
+     *
+     * @param \AppBundle\Entity\Evenement $evenement
+     */
+    public function removeEvenement(\AppBundle\Entity\Evenement $evenement)
+    {
+        $this->evenements->removeElement($evenement);
+    }
+
+    /**
+     * Get evenements
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEvenements()
+    {
+        return $this->evenements;
+    }
 }

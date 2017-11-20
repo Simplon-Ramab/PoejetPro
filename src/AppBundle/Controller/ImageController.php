@@ -58,8 +58,8 @@ class ImageController extends Controller
             $fileName
           );
 
-          // On met à jour la propriété nom
-          $image->setNom($fileName);
+          // On met à jour la propriété nomimage
+          $image->setNomimage($fileName);
             $em = $this->getDoctrine()->getManager();
             $em->persist($image);
             $em->flush();
