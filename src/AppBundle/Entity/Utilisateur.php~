@@ -47,44 +47,49 @@ class Utilisateur extends BaseUser
     /**
      * @var int
      *
-     * @ORM\Column(name="telephone", type="integer")
+     * @ORM\Column(name="telephone", type="integer", nullable=true)
      */
     private $telephone;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="numero", type="integer")
+     * @ORM\Column(name="numero", type="integer", nullable=true, nullable=true)
      */
     private $numero;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nomrue", type="string", length=255)
+     * @ORM\Column(name="nomrue", type="string", length=255, nullable=true)
      */
     private $nomrue;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ville", type="string", length=255)
+     * @ORM\Column(name="ville", type="string", length=255, nullable=true)
      */
     private $ville;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="codePostal", type="integer")
+     * @ORM\Column(name="codePostal", type="integer", nullable=true)
      */
     private $codePostal;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Pays", type="string", length=255)
+     * @ORM\Column(name="Pays", type="string", length=255, nullable=true)
      */
     private $pays;
+
+    public function __construct()
+    {
+        $this->dateInscription = new \DateTime('now');
+    }
 
 
     /**

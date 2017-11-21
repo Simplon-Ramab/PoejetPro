@@ -1,60 +1,55 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-  <div id="wrapper">
-    <div id="container">
-      <div class="slider fullscreen z-depth-2">
-        <ul class="slides">
-          <li>
-            <img src="{{ asset('images/livingroom.jpg') }}"> <!-- random image -->
-            <div class="caption center-align">
-              <h3>This is our big Tagline!</h3>
-              <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-            </div>
-          </li>
-          <li>
-            <img src="{{ asset('images/shopping.jpg') }}"> <!-- random image -->
-            <div class="caption left-align">
-              <h3 class="cyan-text lighten-1">Left Aligned Caption</h3>
-              <h5 class="cyan-text lighten-1">Here's our small slogan.</h5>
-            </div>
-          </li>
-          <li>
-            <img src="{{ asset('images/sacshop.jpg') }}"> <!-- random image -->
-            <div class="caption right-align">
-              <h3>Right Aligned Caption</h3>
-              <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
+
+<div class="slider z-depth-2" >
+    <ul class="slides">
+      <li>
+        <img src="{{ asset('images/livingroom.jpg') }}" > <!-- random image -->
+        <div class="caption center-align">
+          <h3>This is our big Tagline!</h3>
+          <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        </div>
+      </li>
+      <li>
+        <img src="{{ asset('images/shopping.jpg') }}"> <!-- random image -->
+        <div class="caption center-align">
+          <h3>This is our big Tagline!</h3>
+          <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        </div>
+      </li>
+      <li>
+        <img src="{{ asset('images/sacshop.jpg') }}"> <!-- random image -->
+        <div class="caption center-align">
+          <h3>This is our big Tagline!</h3>
+          <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        </div>
+      </li>
+    </ul>
   </div>
   <div class="divider"></div>
-  <div id="content">
-  <div class="row">
-    <div class="col s12 m3">
-        <div class="card-panel cyan lighten-1 ">
-          <span class="white-text">I am a very simple card. I am good at containing small bits of information.
-          I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
-          </span>
+  <h2 class="center-align">Prochaines dates</h2>
+  <div id="wrapper">
+    <div class="container">
+      <div class="row">
+        {% for evenement in evenements %}
+        <div class="col s12 m4 l3">
+          <div class="card medium">
+            <div class="card-image">
+              <a href="{{ path('evenement_show', { 'id': evenement.id }) }}"><img class="responsive-img" src="{{evenement.getCoverWebPath}}">  </a>
+            </div>
+
+            <div class="card-stacked">
+              <div class="card-content">
+                <h5 class="header">{{ evenement.titre }}</h5>
+                <h6>{{ evenement.dateDebut|date('d-m-Y') }}</h6>
+                <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+              </div>
+            </div>
+          </div>
         </div>
+        {% endfor %}
       </div>
-      <div class="col s12 m3">
-        <div class="card-panel cyan lighten-1 ">
-          <span class="white-text">I am a very simple card. I am good at containing small bits of information.
-          I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
-          </span>
-        </div>
-      </div>
-      <div class="col s12 m3">
-        <div class="card-panel cyan lighten-1 ">
-          <span class="white-text">I am a very simple card. I am good at containing small bits of information.
-          I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
-          </span>
-        </div>
-      </div>
-    </div>
     </div>
 
 
@@ -63,32 +58,20 @@
 
 {% block javascripts %}
   <script >
-    $(document).ready(function(){
-      $('.slider').slider({
-        indicators: false
+  $(document).ready(function(){
+  $('.slider').slider({
+        indicators: false,
+        height: 800
       });
-    });
+});
   </script>
 {% endblock %}
 
 {% block stylesheets %}
 <style>
-.caption {
-  color: #ffBB29;
-    opacity: 0.1;
+.card.medium {
+    height: 300px;
 }
-
-.slider .slides li .caption {
-    top: 45%;
-    width: 70%;
-}
-
-#content{
-  position: relative;
-  top: 100vh;
-}
-
-
 
 
 </style>

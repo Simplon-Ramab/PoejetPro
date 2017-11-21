@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * Image
@@ -33,20 +33,10 @@ class Image
 
 
     /**
-    * @ORM\ManyToOne(targetEntity="Evenement", inversedBy="evenements")
+    * @ORM\ManyToOne(targetEntity="Evenement", inversedBy="images")
     * @ORM\JoinColumn(name="evenement_id", referencedColumnName="id")
     */
     private $evenement;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->evenements = new ArrayCollection();
-    }
-
-
 
 
     /**
@@ -147,6 +137,7 @@ class Image
     }
 
 
+
     /**
      * Set evenement
      *
@@ -169,39 +160,5 @@ class Image
     public function getEvenement()
     {
         return $this->evenement;
-    }
-
-    /**
-     * Add evenement
-     *
-     * @param \AppBundle\Entity\Evenement $evenement
-     *
-     * @return Image
-     */
-    public function addEvenement(\AppBundle\Entity\Evenement $evenement)
-    {
-        $this->evenements[] = $evenement;
-
-        return $this;
-    }
-
-    /**
-     * Remove evenement
-     *
-     * @param \AppBundle\Entity\Evenement $evenement
-     */
-    public function removeEvenement(\AppBundle\Entity\Evenement $evenement)
-    {
-        $this->evenements->removeElement($evenement);
-    }
-
-    /**
-     * Get evenements
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEvenements()
-    {
-        return $this->evenements;
     }
 }

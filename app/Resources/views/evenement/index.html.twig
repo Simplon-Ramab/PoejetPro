@@ -12,6 +12,7 @@
                 <th>Datefin</th>
                 <th>Heuredebut</th>
                 <th>Heurefin</th>
+                <th>Image</th>
                 <th>Place</th>
                 <th>Actions</th>
             </tr>
@@ -21,11 +22,12 @@
             <tr>
                 <td><a href="{{ path('evenement_show', { 'id': evenement.id }) }}">{{ evenement.id }}</a></td>
                 <td>{{ evenement.titre }}</td>
-                <td>{% if evenement.dateDebut %}{{ evenement.dateDebut|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if evenement.dateFin %}{{ evenement.dateFin|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if evenement.dateDebut %}{{ evenement.dateDebut|date('d-m-Y') }}{% endif %}</td>
+                <td>{% if evenement.dateFin %}{{ evenement.dateFin|date('d-m-Y') }}{% endif %}</td>
                 <td>{% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i:s') }}{% endif %}</td>
                 <td>{% if evenement.heureFin %}{{ evenement.heureFin|date('H:i:s') }}{% endif %}</td>
-                <td>{{ evenement.place }}</td>
+                <td>{{ evenement.file }}</td>
+                <td><img src="{{ asset(evenement.getCoverWebPath) }}" class="materialboxed" /></td>
                 <td>
                     <ul>
                         <li>
@@ -46,4 +48,12 @@
             <a href="{{ path('evenement_new') }}">Créer un événement</a>
         </li>
     </ul>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+
+
+
+</style>
 {% endblock %}

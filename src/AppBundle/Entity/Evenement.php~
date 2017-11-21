@@ -4,6 +4,9 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Evenement
@@ -72,9 +75,67 @@ class Evenement
     private $place;
 
     /**
-    * @ORM\OneToMany(targetEntity="Image", mappedBy="evenement")
+    * @const path to cover directory
     */
-    private $images;
+    const COVER_DIRECTORY = '/images/imagevent/';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $cover;
+
+    /**
+     * @var File
+     *
+     * @Assert\File(mimeTypes={ "image/jpeg","image/png"  })
+     */
+    private $file;
+
+
+    /**
+     * Get Cover
+     *
+     * @return string
+     */
+    public function getCover()
+    {
+        return $this->cover;
+    }
+
+    /**
+     * Set cover
+     *
+     * @param string $cover
+     *
+     * @return Article
+     */
+    public function setCover($cover)
+    {
+        $this->cover = $cover;
+
+        return $this;
+    }
+
+    /**
+     * @return File
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param File $file
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
+
+
+
 
 
     /**
@@ -82,11 +143,12 @@ class Evenement
      */
     public function __construct()
     {
+
         $this->setDateDebut(new \Datetime());
         $this->setDateFin(new \Datetime());
         $this->setHeureDebut(new \Datetime());
         $this->setHeureFin(new \Datetime());
-        $this->images = new ArrayCollection();
+
     }
 
 
@@ -271,37 +333,41 @@ class Evenement
         return $this->place;
     }
 
-    /**
-     * Add image
-     *
-     * @param \AppBundle\Entity\Image $image
-     *
-     * @return Evenement
-     */
-    public function addImage(\AppBundle\Entity\Image $image)
-    {
-        $this->images[] = $image;
 
-        return $this;
+    /**
+     * On part de notre class et on remonte jusqu'au dossier web
+     * Chemin physique sur le serveur du dossier d'upload
+     *
+     * @return string
+     */
+    public function getCoverUploadDirectory()
+    {
+        return __DIR__ . "/../../../web" . self::COVER_DIRECTORY;
+    }
+
+
+    /**
+     * Chemin physique de l'image sur le serveur
+     *
+     * @return string
+     */
+    public function getCoverAbsolutePath()
+    {
+        return $this->getCoverUploadDirectory() . $this->getCover();
     }
 
     /**
-     * Remove image
+     * Chemin de l'image via l'URL, servira dans pour l'affichage dans les templates twig
      *
-     * @param \AppBundle\Entity\Image $image
+     * @return string
      */
-    public function removeImage(\AppBundle\Entity\Image $image)
+    public function getCoverWebPath()
     {
-        $this->images->removeElement($image);
+        return self::COVER_DIRECTORY . $this->getCover();
     }
 
-    /**
-     * Get images
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getImages()
-    {
-        return $this->images;
-    }
+
+
+
+
 }

@@ -7,8 +7,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\HttpFoundation\File\File;
+
 
 class EvenementType extends AbstractType
 {
@@ -21,13 +24,13 @@ class EvenementType extends AbstractType
         ->add('titre')
         ->add('dateDebut', DateType::class, array(
                     'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy',
+                    'format' => 'd-m-yy',
                     'attr' => ['class' => 'datepicker'],
                     'label' => 'Date de debut'
                   ))
         ->add('dateFin', DateType::class, array(
                     'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy',
+                    'format' => 'd-m-yy',
                     'attr' => ['class' => 'datepicker'],
                     'label' => 'Date de fin'))
         ->add('heureDebut', TimeType::class, array(
@@ -39,15 +42,16 @@ class EvenementType extends AbstractType
                     'attr' => ['class' => 'timepicker'],
                     'label' => 'Heure fin'))
         ->add('place')
+        ->add('file', FileType::class, array('label' => 'Image de cover (JPG ou PNG)'))
         ->add('description', CKEditorType::class, array(
                       'config' => array(
                       'uiColor' => '#26C6DA',
                       'toolbar' => 'basic',
                       'defaultLanguage' => 'fr',
                       'width' => '55%'
-      )
-    ));
-    }
+                    )
+                  ));
+                }
 
     /**
      * {@inheritdoc}

@@ -15,23 +15,27 @@
             </tr>
             <tr>
                 <th>Datedebut</th>
-                <td>{% if evenement.dateDebut %}{{ evenement.dateDebut|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if evenement.dateDebut %}{{ evenement.dateDebut|date('d-m-Y') }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Datefin</th>
-                <td>{% if evenement.dateFin %}{{ evenement.dateFin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if evenement.dateFin %}{{ evenement.dateFin|date('d-m-Y ') }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Heuredebut</th>
-                <td>{% if evenement.heureDebut %}{{ evenement.heureDebut|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i:s') }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Heurefin</th>
-                <td>{% if evenement.heureFin %}{{ evenement.heureFin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if evenement.heureFin %}{{ evenement.heureFin|date('H:i:s') }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Place</th>
                 <td>{{ evenement.place }}</td>
+            </tr>
+            <tr>
+              <th>Couverture</th>
+              <td><img src="{{ asset(evenement.getCoverWebPath) }}" class="materialboxed" /></td>
             </tr>
         </tbody>
     </table>

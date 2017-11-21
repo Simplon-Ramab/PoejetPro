@@ -47,6 +47,22 @@ class EvenementController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            // $file contient l'image nouvellement uploadée
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+            $file = $evenement->getFile();
+
+            // Génération d'un nom unique pour l'image (pour éviter les collisions à l'enregistrement)
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+
+            // Déplacement l'image dans le dossier
+            $file->move(
+                $evenement->getCoverUploadDirectory(),
+                $fileName
+            );
+
+            // On met à jour la propriété cover
+            $evenement->setCover($fileName);
+
             $em->persist($evenement);
             $em->flush();
 
