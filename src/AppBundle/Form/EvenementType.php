@@ -22,6 +22,12 @@ class EvenementType extends AbstractType
     {
         $builder
         ->add('titre')
+        ->add('categorie', EntityType::class, array(
+                'class' => 'AppBundle:Categorie',
+                'choice_label' => 'nom',
+                'multiple' => false,
+                'expanded' => true,
+            ))
         ->add('dateDebut', DateType::class, array(
                     'widget' => 'single_text',
                     'format' => 'd-m-yy',
@@ -45,7 +51,7 @@ class EvenementType extends AbstractType
         ->add('file', FileType::class, array('label' => 'Image de cover (JPG ou PNG)'))
         ->add('description', CKEditorType::class, array(
                       'config' => array(
-                      'uiColor' => '#26C6DA',
+                      'uiColor' => '#00bcd4',
                       'toolbar' => 'basic',
                       'defaultLanguage' => 'fr',
                       'width' => '55%'

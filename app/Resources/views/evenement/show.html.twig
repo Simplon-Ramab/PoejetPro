@@ -34,6 +34,10 @@
                 <td>{{ evenement.place }}</td>
             </tr>
             <tr>
+                <th>Caterogie</th>
+                <td>{{ evenement.categorie.nom }}</td>
+            </tr>
+            <tr>
               <th>Couverture</th>
               <td><img src="{{ asset(evenement.getCoverWebPath) }}" class="materialboxed" /></td>
             </tr>

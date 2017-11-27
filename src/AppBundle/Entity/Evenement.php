@@ -93,6 +93,12 @@ class Evenement
      */
     private $file;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="evenement")
+    * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id")
+    */
+    private $categorie;
+
 
     /**
      * Get Cover
@@ -370,4 +376,28 @@ class Evenement
 
 
 
+
+    /**
+     * Set categorie
+     *
+     * @param \AppBundle\Entity\Categorie $categorie
+     *
+     * @return Evenement
+     */
+    public function setCategorie(\AppBundle\Entity\Categorie $categorie = null)
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * Get categorie
+     *
+     * @return \AppBundle\Entity\Categorie
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
 }

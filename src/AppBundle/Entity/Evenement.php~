@@ -93,6 +93,12 @@ class Evenement
      */
     private $file;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="evenement")
+    * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id")
+    */
+    private $categorie;
+
 
     /**
      * Get Cover
@@ -144,10 +150,10 @@ class Evenement
     public function __construct()
     {
 
-        $this->setDateDebut(new \Datetime());
-        $this->setDateFin(new \Datetime());
-        $this->setHeureDebut(new \Datetime());
-        $this->setHeureFin(new \Datetime());
+        $this->setDateDebut(new \Datetime('now'));
+        $this->setDateFin(new \Datetime('now'));
+        $this->setHeureDebut(new \Datetime('now'));
+        $this->setHeureFin(new \Datetime('now'));
 
     }
 
@@ -370,4 +376,28 @@ class Evenement
 
 
 
+
+    /**
+     * Set categorie
+     *
+     * @param \AppBundle\Entity\Category $categorie
+     *
+     * @return Evenement
+     */
+    public function setCategorie(\AppBundle\Entity\Category $categorie = null)
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * Get categorie
+     *
+     * @return \AppBundle\Entity\Category
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
 }
