@@ -3,11 +3,11 @@
 <div class="navbar-fixed">
   <nav class="transparent z-depth-0">
     <div class="nav-wrapper container-fluid">
-      <a href="/" class="brand-logo">VideHome</a>
+      <a href="/" class="brand-logo"><img src="{{ asset('images/videhome.png') }}" ></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <li class="col md 3"><a href="{{ path('evenement_index') }}"><i class="fa fa-home" aria-hidden="true"></i>VideHome</a></li>
             <!--{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |-->
-            <li class="col md 3"><a href="{{ path('evenement_index') }}"><i class="fa fa-home" aria-hidden="true"></i>VideHome</a></li>
             <li class="col md 3"><a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user" aria-hidden="true"></i>
               {{ 'Mon compte'|trans({}, 'FOSUserBundle') }}
             </a></li>
@@ -15,6 +15,7 @@
               {{ 'Deconnexion'|trans({}, 'FOSUserBundle') }}
             </a></li>
         {% else %}
+        <li class="col md 3"><a href="{{ path('evenement_index') }}"><i class="fa fa-home" aria-hidden="true"></i>VideHome</a></li>
         <li class="col md 3"><a href="{{ path('fos_user_security_login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i>
           Connexion</a></li>
         <li><a href="{{ path('fos_user_registration_register') }}"><i class="fa fa-user-plus" aria-hidden="true"></i>
@@ -58,7 +59,15 @@ $(function(){
 
 body{
   color: #424242;
-  font-family: 'Roboto'
+  font-family: 'Roboto';
+}
+
+.brand-logo>img{
+  position:relative;
+  padding: 5px;
+  width:15%;
+  left: 25px;
+  margin-top: 20px;
 }
 
 nav ul a {

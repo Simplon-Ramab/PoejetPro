@@ -1,59 +1,225 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Evenements list</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titre</th>
-                <th>Datedebut</th>
-                <th>Datefin</th>
-                <th>Heuredebut</th>
-                <th>Heurefin</th>
-                <th>Image</th>
-                <th>Place</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for evenement in evenements %}
-            <tr>
-                <td><a href="{{ path('evenement_show', { 'id': evenement.id }) }}">{{ evenement.id }}</a></td>
-                <td>{{ evenement.titre }}</td>
-                <td>{% if evenement.dateDebut %}{{ evenement.dateDebut|date('d-m-Y') }}{% endif %}</td>
-                <td>{% if evenement.dateFin %}{{ evenement.dateFin|date('d-m-Y') }}{% endif %}</td>
-                <td>{% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i:s') }}{% endif %}</td>
-                <td>{% if evenement.heureFin %}{{ evenement.heureFin|date('H:i:s') }}{% endif %}</td>
-                <td>{{ evenement.file }}</td>
-                <td><img src="{{ asset(evenement.getCoverWebPath) }}" class="materialboxed" /></td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('evenement_show', { 'id': evenement.id }) }}">Voir</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('evenement_edit', { 'id': evenement.id }) }}">Modifier</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<!-- Content -->
+<div class="parallax-container center valign-wrapper">
+  <div class="container" style="top:55px;">
+    <div class="row">
+      <div class="col s12 white-text">
+        <div class="row">
+          <form class="col s12 m10 l10 white offset-m2 offset-l1">
+            <div class="row" style="padding-right:25px;">
+              <div class="input-field col s12 m3 l3">
+                <i class="material-icons prefix">date_range</i>
+                <input type="text" class="datepicker">
+                <label for="icon_date">Date</label>
+              </div>
+              <div class="input-field col s12 m4 l4">
+                <i class="material-icons prefix">edit</i>
+                <input id="icon_mot" type="tel" class="validate">
+                <label for="icon_mot">Mot clé</label>
+              </div>
+              <div class="input-field col s12 m4 l4">
+                <i class="material-icons prefix">location_on</i>
+                <input id="icon_ville" type="tel" class="validate">
+                <label for="icon_ville">Ville ou code postal</label>
+              </div>
+              <div class="input-field col s12 m1 l1">
+                <a class="btn-floating btn-large waves-effect waves-light orange "><i class="material-icons">search</i></a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <p>A modern responsive front-end framework based on Material Design</p>
+          <a href="{{ path('evenement_new') }}" class="btn-large">Créer un événement</a>
+      </div>
+    </div>
+  </div>
+  <div class="parallax">
+    <img src="{{ asset('images/sacshop.jpg') }}">
+  </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('evenement_new') }}">Créer un événement</a>
-        </li>
-    </ul>
+</div>
+<div class="divider"></div>
+  <div class="col m12 s12 l2">
+    <div class="row">
+      <div class="col l3 s12 m3 offset-m1 offset-l1">
+        <div class="collection ">
+          <h4 class="cyan-text center-align">Catégories</h4>
+          <hr>
+          <a href="#!" class="collection-item grey-text text-darken-3">Vide-dressing</a>
+          <a href="#!" class="collection-item grey-text text-darken-3">Vide-grenier</a>
+          <a href="#!" class="collection-item grey-text text-darken-3">Jeux vidéo</a>
+          <a href="#!" class="collection-item grey-text text-darken-3">Puériculture</a>
+          <a href="#!" class="collection-item grey-text text-darken-3">Jeux ou jouets</a>
+          <a href="#!" class="collection-item grey-text text-darken-3">Fournitures de bureau</a>
+          <a href="#!" class="collection-item grey-text text-darken-3">Ameublement</a>
+          <a href="#!" class="collection-item grey-text text-darken-3">Electromenager</a>
+          <a href="#!" class="collection-item grey-text text-darken-3">Linge de maison</a>
+        </div>
+      </div>
+      <div class="col l6 s12 m6">
+        <div id="tri">
+        <select class="icons">
+          <option value="" disabled selected>Trier</option>
+          <option value="">Date</option>
+          <option value="">Nombre de personne</option>
+        </select>
+        <label>Images in select</label>
+      </div>
+        <div class="divider"></div>
+          {% for evenement in evenements|reverse %}
+            <div class="card">
+          <div class="row">
+            <div class="col l3 m3 s12">
+              <a href="{{ path('evenement_show', { 'id': evenement.id }) }}"><img src="{{ asset(evenement.getCoverWebPath) }}" alt="" class="scale"></a>
+            </div>
+            <div class="col l6 m6 s12">
+              <h5 class="title">{{ evenement.titre |capitalize }}</h5>
+              <p>{% if evenement.dateDebut %}{{ evenement.dateDebut|date('d M') }}{% endif %} au {% if evenement.dateFin %}{{ evenement.dateFin|date('d M Y') }}{% endif %}<br>
+                 {% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i') }}{% endif %} à {% if evenement.heureFin %}{{ evenement.heureFin|date('H:i') }}{% endif %}<br>
+                 {{ evenement.categorie.nom }}<br>
+                 {{ evenement.place }}
+              </p>
+            </div>
+            <div class="col l1 m1 s12">
+              <div class="btnpadding">
+                <a href="{{ path('evenement_show', { 'id': evenement.id }) }}" class="btn">Voir</a>
+              </div class="btnpadding" >
+              <div>
+                <a href="#" class="btn">S'inscrire</a>
+              </div>
+            </div>
+          </div>
+
+          </div>
+          {% endfor %}
+          <div class="">
+            <ul class="pagination">
+              <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+              <li class="active"><a href="#!" class="btn">1</a></li>
+              <li class="waves-effect"><a href="#!" class="btn">2</a></li>
+              <li class="waves-effect"><a href="#!" class="btn">3</a></li>
+              <li class="waves-effect"><a href="#!" class="btn">4</a></li>
+              <li class="waves-effect"><a href="#!" class="btn">5</a></li>
+              <li class="waves-effect"><a href="#!" class="btn"><i class="material-icons">chevron_right</i></a></li>
+            </ul>
+          </div>
+      </div>
+    </div>
+  </div>
+
 {% endblock %}
 
 {% block stylesheets %}
 <style>
+td{
+  text-align: center;
+}
 
+.select-wrapper{
+  width: 40%;
+  color:#00bcd4;
+}
 
+.dropdown-content li>a, .dropdown-content li>span{
+  color:#00bcd4;
+}
 
+.materialboxed{
+  width: 50%;
+}
+#imgCover{
+  width: 100%;
+}
+
+input{
+  color: black;
+}
+
+.scale{
+  max-width: 70%;
+
+}
+.btnpadding{
+  padding-bottom:10px;
+  padding-top:10px;
+}
+
+img{
+  padding-top:25px;
+}
+
+.intro-text {
+	font-size: 50px;
+	color: #fff;
+	text-align: center;
+	margin-top: 15%;
+}
+
+@media screen and(max-width: 600px) {
+  .select-wrapper{
+    width: 50%;
+  }
+}
 </style>
+{% endblock %}
+
+{% block javascripts %}
+  <script >
+  $(document).ready(function(){
+  $('select').material_select();
+   $('.parallax').parallax();
+   $('input.autocomplete').autocomplete({
+    data: {
+      "Vide-dressing": null,
+      "Vide-grenier": null,
+      "Jeux vidéo": 'https://placehold.it/250x250',
+      "Puériculture": null,
+      "Jeux ou jouets": null,
+      "Fournitures de bureau": null,
+      "Ameublement": null,
+      "Electromenager": null,
+      "Linde de maison": null
+    },
+    limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+    onAutocomplete: function(val) {
+      // Callback function when value is autcompleted.
+    },
+    minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+  });
+
+
+
+    $('.datepicker').pickadate({
+  defaultDate: '01-01-2017',
+  selectMonths: true,//Creates a dropdown to control month
+  selectHours: true,//Creates a dropdown to control month
+  selectYears: 15,//Creates a dropdown of 15 years to control year
+  //The title label to use for the month nav buttons
+  labelMonthNext: 'Mois suivant',
+  labelMonthPrev: 'Mois précedent',
+  //The title label to use for the dropdown selectors
+  labelMonthSelect: 'Selectionner Mois',
+  labelYearSelect: 'Selectionner l\'année',
+  min: ['now'],
+  max: [2057,12,31],
+  //Months and weekdays
+  monthsFull: [ 'Janvier', 'Fevriér', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Decembre' ],
+  monthsShort: [ 'Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Juil', 'Aoû', 'Sep', 'Oct', 'Nov', 'Dec' ],
+  weekdaysFull: [ 'Dimanche', 'Lundi', 'Mardi', 'Mercrdi', 'Jeudi', 'Vendredi', 'Samedi' ],
+  weekdaysShort: [ 'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam' ],
+  //Materialize modified
+  weekdaysLetter: [ 'S', 'L', 'M', 'M', 'J', 'V', 'S' ],
+  //Today and clear
+  today: 'Aujourd\'hui',
+  clear: 'Effacer',
+  close: 'Fermer',
+  //The format to show on the `input` element
+  format: 'd-m-yy',
+  });
+
+});
+  </script>
 {% endblock %}
