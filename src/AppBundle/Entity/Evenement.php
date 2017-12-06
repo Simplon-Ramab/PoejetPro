@@ -101,6 +101,13 @@ class Evenement
 
 
     /**
+     * @ORM\ManyToOne(targetEntity="Utilisateur", inversedBy="evenement")
+     * @ORM\JoinColumn(name="utilisateur_id", referencedColumnName="id")
+     */
+    private $utilisateur;
+
+
+    /**
      * Get Cover
      *
      * @return string
@@ -399,5 +406,29 @@ class Evenement
     public function getCategorie()
     {
         return $this->categorie;
+    }
+
+    /**
+     * Set utilisateur
+     *
+     * @param \AppBundle\Entity\Utilisateur $utilisateur
+     *
+     * @return Evenement
+     */
+    public function setUtilisateur(\AppBundle\Entity\Utilisateur $utilisateur = null)
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return \AppBundle\Entity\Utilisateur
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
     }
 }

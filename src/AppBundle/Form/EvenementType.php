@@ -11,6 +11,7 @@ use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 
 class EvenementType extends AbstractType
@@ -27,6 +28,11 @@ class EvenementType extends AbstractType
                 'choice_label' => 'nom',
                 'multiple' => false,
                 'expanded' => true,
+            ))
+
+        ->add('utilisateur', EntityType::class, array(
+                'class' => 'AppBundle:Utilisateur',
+                'choice_label' => 'prenom',
             ))
         ->add('dateDebut', DateType::class, array(
                     'widget' => 'single_text',

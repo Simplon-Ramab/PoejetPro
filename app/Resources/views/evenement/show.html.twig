@@ -3,8 +3,7 @@
 {% block body %}
 
 <div class="container">
-
-
+  <div class="divider"></div>
   <div class="col s12 m11 l11">
   <div class="divider"></div>
     <h3 class="center-align">{{ evenement.titre | capitalize}} du {% if evenement.dateDebut %}{{ evenement.dateDebut|date('d-m-Y') }}{% endif %}</h3>
@@ -22,17 +21,17 @@
         <hr>
           <div class="divider"></div>
         <div class="row">
-          <div class="col s12 m5 l5 card">
+          <div class="col s12 m7 l7 card">
             <p>{{ evenement.description|raw }}</p>
           </div>
-          <div class="col s12 m5 l5 card offset-m1 offset-l1">
+          <div class="col s12 m4 l4 card offset-m1 offset-l1">
             <p>Date: {% if evenement.dateDebut %}{{ evenement.dateDebut|date('d-m-Y') }}{% endif %} au {% if evenement.dateFin %}{{ evenement.dateFin|date('d-m-Y ') }}{% endif %}</p>
             <p>Horaire: {% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i:s') }}{% endif %} - {% if evenement.heureFin %}{{ evenement.heureFin|date('H:i:s') }}{% endif %}</p>
-            <p>Ville: Lyon</p>
+            <p>Ville: {{ evenement.utilisateur.ville |capitalize}}</p>
             <p>Catégorie: {{ evenement.categorie.nom }}</p>
             <p>Nombre de participants: {{ evenement.place }}</p>
             <p>Nom d'inscrits: 6</p>
-            <p>Organisateur: VideHome</p>
+            <p>Organisateur: <span class="cyan-text">{{ evenement.utilisateur.prenom |capitalize}}</span></p>
             <div class="row ">
               <div class="center-align">
                 <a href="#" class="btn">Contacter </a>
@@ -63,6 +62,9 @@
 img {
   width:100%;
   padding-top:10px;
+}
+.card p{
+  overflow-wrap: break-word;
 }
 
 

@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
@@ -86,9 +87,15 @@ class Utilisateur extends BaseUser
      */
     private $pays;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Evenement", mappedBy="utilisateur")
+     */
+    private $utilisateurs;
+
     public function __construct()
     {
         $this->dateInscription = new \DateTime('now');
+        $this->utilisateurs = new ArrayCollection();
     }
 
 
@@ -318,4 +325,38 @@ class Utilisateur extends BaseUser
         return $this->pays;
     }
 
+
+    /**
+     * Add utilisateur
+     *
+     * @param \AppBundle\Entity\Evenement $utilisateur
+     *
+     * @return Utilisateur
+     */
+    public function addUtilisateur(\AppBundle\Entity\Evenement $utilisateur)
+    {
+        $this->utilisateurs[] = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Remove utilisateur
+     *
+     * @param \AppBundle\Entity\Evenement $utilisateur
+     */
+    public function removeUtilisateur(\AppBundle\Entity\Evenement $utilisateur)
+    {
+        $this->utilisateurs->removeElement($utilisateur);
+    }
+
+    /**
+     * Get utilisateurs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUtilisateurs()
+    {
+        return $this->utilisateurs;
+    }
 }

@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
@@ -54,7 +55,7 @@ class Utilisateur extends BaseUser
     /**
      * @var int
      *
-     * @ORM\Column(name="numero", type="integer", nullable=true, nullable=true)
+     * @ORM\Column(name="numero", type="integer", nullable=true)
      */
     private $numero;
 
@@ -86,9 +87,15 @@ class Utilisateur extends BaseUser
      */
     private $pays;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Evenement", mappedBy="utilisateur")
+     */
+    private $utilisateurs;
+
     public function __construct()
     {
         $this->dateInscription = new \DateTime('now');
+        $this->utilisateurs = new ArrayCollection();
     }
 
 
