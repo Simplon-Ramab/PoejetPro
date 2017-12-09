@@ -31,8 +31,11 @@
             </div>
           </form>
         </div>
-        <p>A modern responsive front-end framework based on Material Design</p>
-          <a href="{{ path('evenement_new') }}" class="btn-large">Créer un événement</a>
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <a href="{{ path('evenement_new') }}" class="btn">Créer un événement</a>
+        {% else %}
+            <a href="/login" class="btn">Créer un événement</a>
+        {% endif %}</li>
       </div>
     </div>
   </div>

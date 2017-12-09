@@ -75,7 +75,7 @@ class Categorie
         return $this->nom;
     }
 
-  
+
 
     /**
      * Add evenement

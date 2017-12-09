@@ -94,14 +94,14 @@ class Evenement
     private $file;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="evenement")
+    * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="evenements")
     * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id")
     */
     private $categorie;
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Utilisateur", inversedBy="evenement")
+     * @ORM\ManyToOne(targetEntity="Utilisateur", inversedBy="evenements")
      * @ORM\JoinColumn(name="utilisateur_id", referencedColumnName="id")
      */
     private $utilisateur;

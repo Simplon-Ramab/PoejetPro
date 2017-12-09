@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+
 /**
  * Evenement controller.
  *
@@ -36,7 +37,7 @@ class EvenementController extends Controller
 
     /**
      * Creates a new evenement entity.
-     *
+     * @Security("has_role('ROLE_USER')")
      * @Route("/new", name="evenement_new")
      * @Method({"GET", "POST"})
      */
@@ -94,7 +95,7 @@ class EvenementController extends Controller
 
     /**
      * Displays a form to edit an existing evenement entity.
-     *
+     * @Security("has_role('ROLE_USER')")
      * @Route("/{id}/edit", name="evenement_edit")
      * @Method({"GET", "POST"})
      */
@@ -119,7 +120,7 @@ class EvenementController extends Controller
 
     /**
      * Deletes a evenement entity.
-     *
+     * @Security("has_role('ROLE_USER')")
      * @Route("/{id}", name="evenement_delete")
      * @Method("DELETE")
      */
