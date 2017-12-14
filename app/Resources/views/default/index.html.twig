@@ -41,7 +41,7 @@
                 <p>{{ evenement.dateDebut|date('d M Y') }} à Lyon</p>
                 <p>{{ evenement.place}} places</p>
                 <p>{{ evenement.categorie.nom}}</p>
-                <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+                <a class="btn-floating halfway-fab waves-effect waves-light red" href="{{ path('evenement_show', { 'id': evenement.id }) }}"><i class="material-icons">add</i></a>
               </div>
             </div>
           </div>

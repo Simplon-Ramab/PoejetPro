@@ -30,10 +30,7 @@ class EvenementType extends AbstractType
                 'expanded' => true,
             ))
 
-        ->add('utilisateur', EntityType::class, array(
-                'class' => 'AppBundle:Utilisateur',
-                'choice_label' => 'prenom',
-            ))
+
         ->add('dateDebut', DateType::class, array(
                     'widget' => 'single_text',
                     'format' => 'dd-M-yy',
@@ -54,13 +51,14 @@ class EvenementType extends AbstractType
                     'attr' => ['class' => 'timepicker'],
                     'label' => 'Heure fin'))
         ->add('place')
-        ->add('file', FileType::class, array('label' => 'Image de cover (JPG ou PNG)'))
+        ->add('file', FileType::class, array(
+                'label' => 'Ajouter l\'image (JPG ou PNG)'))
         ->add('description', CKEditorType::class, array(
                       'config' => array(
                       'uiColor' => '#00bcd4',
                       'toolbar' => 'basic',
                       'defaultLanguage' => 'fr',
-                      'width' => '55%'
+                      'width' => '100%'
                     )
                   ));
                 }

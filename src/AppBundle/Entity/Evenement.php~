@@ -108,6 +108,13 @@ class Evenement
 
 
     /**
+    * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Utilisateur", inversedBy="evenements")
+    * @ORM\JoinTable(name="participation")
+    */
+   private $participants;
+
+
+    /**
      * Get Cover
      *
      * @return string
@@ -197,6 +204,31 @@ class Evenement
     public function getTitre()
     {
         return $this->titre;
+    }
+
+
+    /**
+     * Set participants
+     *
+     * @param string $participants
+     *
+     * @return Evenement
+     */
+    public function setParticipants($participants)
+    {
+        $this->participants = $participants;
+
+        return $this;
+    }
+
+    /**
+     * Get participants
+     *
+     * @return string
+     */
+    public function getParticipants()
+    {
+        return $this->participants;
     }
 
 

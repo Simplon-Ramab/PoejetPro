@@ -108,6 +108,13 @@ class Evenement
 
 
     /**
+    * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Utilisateur", inversedBy="evenements")
+    * @ORM\JoinTable(name="participation")
+    */
+   private $participants;
+
+
+    /**
      * Get Cover
      *
      * @return string
@@ -149,8 +156,6 @@ class Evenement
 
 
 
-
-
     /**
      * Constructor
      */
@@ -161,6 +166,7 @@ class Evenement
         $this->setDateFin(new \Datetime('now'));
         $this->setHeureDebut(new \Datetime('now'));
         $this->setHeureFin(new \Datetime('now'));
+        $this->participants = new ArrayCollection();
 
     }
 
@@ -197,6 +203,31 @@ class Evenement
     public function getTitre()
     {
         return $this->titre;
+    }
+
+
+    /**
+     * Set participants
+     *
+     * @param string $participants
+     *
+     * @return Evenement
+     */
+    public function setParticipants($participants)
+    {
+        $this->participants = $participants;
+
+        return $this;
+    }
+
+    /**
+     * Get participants
+     *
+     * @return string
+     */
+    public function getParticipants()
+    {
+        return $this->participants;
     }
 
 
@@ -415,7 +446,7 @@ class Evenement
      *
      * @return Evenement
      */
-    public function setUtilisateur(\AppBundle\Entity\Utilisateur $utilisateur = null)
+    public function setUtilisateur(\AppBundle\Entity\Utilisateur $utilisateur)
     {
         $this->utilisateur = $utilisateur;
 
@@ -430,5 +461,29 @@ class Evenement
     public function getUtilisateur()
     {
         return $this->utilisateur;
+    }
+
+    /**
+     * Add participant
+     *
+     * @param \AppBundle\Entity\Utilisateur $participant
+     *
+     * @return Evenement
+     */
+    public function addParticipant(\AppBundle\Entity\Utilisateur $participant)
+    {
+        $this->participants[] = $participant;
+
+        return $this;
+    }
+
+    /**
+     * Remove participant
+     *
+     * @param \AppBundle\Entity\Utilisateur $participant
+     */
+    public function removeParticipant(\AppBundle\Entity\Utilisateur $participant)
+    {
+        $this->participants->removeElement($participant);
     }
 }

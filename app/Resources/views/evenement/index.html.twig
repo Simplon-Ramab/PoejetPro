@@ -75,29 +75,43 @@
           {% for evenement in evenements|reverse %}
             <div class="card">
           <div class="row">
-            <div class="col l3 m3 s12">
+            <div class="col l3 m3 s12 valign-wrapper">
               <a href="{{ path('evenement_show', { 'id': evenement.id }) }}"><img src="{{ asset(evenement.getCoverWebPath) }}" alt="" class="scale"></a>
             </div>
-            <div class="col l6 m6 s12">
+            <div class="col l5 m5 s12">
               <h5 class="title">{{ evenement.titre |capitalize }}</h5>
               <p>{% if evenement.dateDebut %}{{ evenement.dateDebut|date('d M') }}{% endif %} au {% if evenement.dateFin %}{{ evenement.dateFin|date('d M Y') }}{% endif %}<br>
                  {% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i') }}{% endif %} à {% if evenement.heureFin %}{{ evenement.heureFin|date('H:i') }}{% endif %}<br>
                  {{ evenement.categorie.nom }}<br>
-                 {{ evenement.utilisateur.prenom }}<br>
-                 {{ evenement.place }}
+                 {{ evenement.place }} places <br>
+                 {{evenement.participants|length }} inscrits <br>
+                 Organsisé par <span class="cyan-text">{{ evenement.utilisateur.prenom|capitalize }}</span>
               </p>
             </div>
-            <div class="col l1 m1 s12">
+            {% if evenement.participants|length == evenement.place %}
+            <div class="col l3 m3 s12 center-align ">
               <div class="btnpadding">
                 <a href="{{ path('evenement_show', { 'id': evenement.id }) }}" class="btn">Voir</a>
               </div class="btnpadding" >
               <div>
-                <a href="#" class="btn">S'inscrire</a>
+                <a href="{{ path('inscrire', { 'id': evenement.id }) }}" class="btn disabled">S'inscrire</a>
               </div>
             </div>
           </div>
+          {% else %}
+          <div class="col l3 m3 s12 center-align ">
+            <div class="btnpadding">
+              <a href="{{ path('evenement_show', { 'id': evenement.id }) }}" class="btn">Voir</a>
+            </div class="btnpadding" >
+            <div>
+              <a href="{{ path('inscrire', { 'id': evenement.id }) }}" class="btn">S'inscrire</a>
+            </div>
+          </div>
+        </div>
+          {% endif %}
 
           </div>
+
           {% endfor %}
           <div class="">
             <ul class="pagination">
@@ -148,8 +162,9 @@ input{
   vertical-align: middle;
 }
 .btnpadding{
-  padding-bottom:10px;
-  padding-top:10px;
+  padding-top:40px;
+  padding-bottom:20px;
+
 }
 
 .intro-text {

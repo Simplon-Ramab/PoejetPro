@@ -44,6 +44,7 @@ class EvenementController extends Controller
     public function newAction(Request $request)
     {
         $evenement = new Evenement();
+        $evenement->setUtilisateur($this ->container->get('security.token_storage')->getToken()->getUser());
         $form = $this->createForm('AppBundle\Form\EvenementType', $evenement);
         $form->handleRequest($request);
 
@@ -153,4 +154,68 @@ class EvenementController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * Inscription à un evenements.
+     * @Route("/{id}/add", name="inscrire", requirements={"id": "\d+"})
+     * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param Evenement $evenement
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+     public function Participer(Request $request, Evenement $evenement)
+
+     {
+         $editForm = $this->createForm('AppBundle\Form\EvenementType', $evenement);
+         $editForm->setData($evenement->addParticipant(
+             $this->container
+             ->get('security.token_storage')
+             ->getToken()
+             ->getUser()
+         ));
+         $editForm->handleRequest($request);
+         if ($editForm->isSubmitted() && $editForm->isValid() &&
+             count($evenement->getParticipants()) <= $evenement->getPlace()) {
+             $em = $this->getDoctrine()->getManager();
+             $em->flush();
+             return $this->redirectToRoute('evenement_index');
+         }
+         return $this->render('evenement/show_add_event.html.twig', array(
+             'evenements' => $evenement,
+             'edit_form' => $editForm->createView(),
+         ));
+     }
+
+     /**
+      * Inscription à un evenements.
+      * @Route("/{id}/supprimer", name="desinscrire", requirements={"id": "\d+"})
+      * @Method({"GET", "POST"})
+      * @param Request $request
+      * @param Evenement $evenement
+      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+      */
+      public function Desinscrire(Request $request, Evenement $evenement)
+
+      {
+          $editForm = $this->createForm('AppBundle\Form\EvenementType', $evenement);
+          $editForm->setData($evenement->removeParticipant(
+              $this->container
+              ->get('security.token_storage')
+              ->getToken()
+              ->getUser()
+          ));
+          $editForm->handleRequest($request);
+          if ($editForm->isSubmitted() && $editForm->isValid() &&
+              count($evenement->getParticipants()) <= $evenement->getPlace()) {
+              $em = $this->getDoctrine()->getManager();
+              $em->flush();
+              return $this->redirectToRoute('evenement_index');
+          }
+          return $this->render('evenement/show_remove_event.html.twig', array(
+              'evenements' => $evenement,
+              'edit_form' => $editForm->createView(),
+          ));
+      }
+
+
 }

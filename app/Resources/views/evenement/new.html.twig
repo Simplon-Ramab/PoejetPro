@@ -3,22 +3,27 @@
 {% block body %}
 <div class="container">
 
-
-    <h1>Evenement creation</h1>
-
+    <div class="row" style="padding-top: 8em">
+      <div class="col m11 l11 animated bounceInDown">
+        <div class="card-panel hoverable">
+    <h3 class="center-align">Créer votre événement</h3>
     {{ form_start(form) }}
         {{ form_widget(form) }}
         {{ form_row(form.file) }}
-        <input type="submit" value="Créer" />
+        <div class="divider"></div>
+        <input type="submit" value="Créer" class="btn"/>
+        <a href="{{ path('evenement_index') }}" class="btn">Retour aux événements </a>
     {{ form_end(form) }}
 
     <ul>
         <li>
-            <a href="{{ path('evenement_index') }}">Retour aux événements </a>
+
         </li>
     </ul>
-
+</div>
     </div>
+  </div>
+      </div>
 {% endblock %}
 
 {% block javascripts %}
@@ -43,7 +48,7 @@ monthsShort: [ 'Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Juil', 'Aoû', 'Sep', 
 weekdaysFull: [ 'Dimanche', 'Lundi', 'Mardi', 'Mercrdi', 'Jeudi', 'Vendredi', 'Samedi' ],
 weekdaysShort: [ 'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam' ],
 //Materialize modified
-weekdaysLetter: [ 'S', 'L', 'M', 'M', 'J', 'V', 'S' ],
+weekdaysLetter: [ 'D', 'L', 'M', 'M', 'J', 'V', 'S' ],
 //Today and clear
 today: 'Aujourd\'hui',
 clear: 'Effacer',

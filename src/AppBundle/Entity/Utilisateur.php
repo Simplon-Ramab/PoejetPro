@@ -92,10 +92,23 @@ class Utilisateur extends BaseUser
      */
     private $utilisateurs;
 
+    /**
+    * Many Users have Many Events
+    * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Evenement", mappedBy="participants")
+    */
+   private $evenements;
+
+   /**
+   * @ORM\OneToMany(targetEntity="Commentaire", mappedBy="utilisateur")
+   */
+   private $commentaires;
+
     public function __construct()
     {
         $this->dateInscription = new \DateTime('now');
         $this->utilisateurs = new ArrayCollection();
+        $this->evenements = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
     }
 
 
@@ -358,5 +371,73 @@ class Utilisateur extends BaseUser
     public function getUtilisateurs()
     {
         return $this->utilisateurs;
+    }
+
+    /**
+     * Add evenement
+     *
+     * @param \AppBundle\Entity\Evenement $evenement
+     *
+     * @return Utilisateur
+     */
+    public function addEvenement(\AppBundle\Entity\Evenement $evenement)
+    {
+        $this->evenements[] = $evenement;
+
+        return $this;
+    }
+
+    /**
+     * Remove evenement
+     *
+     * @param \AppBundle\Entity\Evenement $evenement
+     */
+    public function removeEvenement(\AppBundle\Entity\Evenement $evenement)
+    {
+        $this->evenements->removeElement($evenement);
+    }
+
+    /**
+     * Get evenements
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEvenements()
+    {
+        return $this->evenements;
+    }
+
+    /**
+     * Add commentaire
+     *
+     * @param \AppBundle\Entity\Commentaire $commentaire
+     *
+     * @return Utilisateur
+     */
+    public function addCommentaire(\AppBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires[] = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove commentaire
+     *
+     * @param \AppBundle\Entity\Commentaire $commentaire
+     */
+    public function removeCommentaire(\AppBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires->removeElement($commentaire);
+    }
+
+    /**
+     * Get commentaires
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
     }
 }

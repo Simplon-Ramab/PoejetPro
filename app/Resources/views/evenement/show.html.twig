@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
 <div class="container">
   <div class="divider"></div>
   <div class="col s12 m11 l11">
@@ -24,18 +23,37 @@
           <div class="col s12 m7 l7 card">
             <p>{{ evenement.description|raw }}</p>
           </div>
+
+
           <div class="col s12 m4 l4 card offset-m1 offset-l1">
+
             <p>Date: {% if evenement.dateDebut %}{{ evenement.dateDebut|date('d-m-Y') }}{% endif %} au {% if evenement.dateFin %}{{ evenement.dateFin|date('d-m-Y ') }}{% endif %}</p>
             <p>Horaire: {% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i:s') }}{% endif %} - {% if evenement.heureFin %}{{ evenement.heureFin|date('H:i:s') }}{% endif %}</p>
             <p>Ville: {{ evenement.utilisateur.ville |capitalize}}</p>
             <p>Catégorie: {{ evenement.categorie.nom }}</p>
             <p>Nombre de participants: {{ evenement.place }}</p>
-            <p>Nom d'inscrits: 6</p>
+            <p>Nombre place disponibles: {{ evenement.place - evenement.participants|length }}</p>
             <p>Organisateur: <span class="cyan-text">{{ evenement.utilisateur.prenom |capitalize}}</span></p>
             <div class="row ">
               <div class="center-align">
-                <a href="#" class="btn">Contacter </a>
-                <a href="#" class="btn">S'inscrire</a>
+                <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Contacter</a>
+                  <!-- Modal Structure -->
+                  <div id="modal1" class="modal">
+                    <div class="modal-content">
+
+                        {{ render(controller(
+                            'AppBundle\\Controller\\EvenementController::Participer', {evenement:evenement}
+                        )) }}
+            
+
+                    </div>
+                    <div class="modal-footer">
+                      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                    </div>
+                  </div>
+                <a href="{{ path('inscrire', { 'id': evenement.id }) }}" class="btn">S'inscrire</a>
+                <a href="{{ path('desinscrire', { 'id': evenement.id }) }}" class="btn">Se desinscrire</a>
+
             </div>
           </div>
 
@@ -67,10 +85,16 @@ img {
   overflow-wrap: break-word;
 }
 
-
-
-
-
-
 </style>
+{% endblock %}
+
+{% block javascripts %}
+  <script >
+
+  $(document).ready(function(){
+
+      $('#modal1').modal();
+});
+
+  </script>
 {% endblock %}
