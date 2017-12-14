@@ -44,6 +44,13 @@ class Commentaire
 
 
     /**
+     * @ORM\ManyToOne(targetEntity="Utilisateur", inversedBy="commentaires")
+     * @ORM\JoinColumn(name="utilisateur_id", referencedColumnName="id")
+     */
+    private $commentaire;
+
+
+    /**
      * Get id
      *
      * @return int
@@ -123,5 +130,29 @@ class Commentaire
     public function getDatePublication()
     {
         return $this->datePublication;
+    }
+
+    /**
+     * Set commentaire
+     *
+     * @param \AppBundle\Entity\Utilisateur $commentaire
+     *
+     * @return Commentaire
+     */
+    public function setCommentaire(\AppBundle\Entity\Utilisateur $commentaire = null)
+    {
+        $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Get commentaire
+     *
+     * @return \AppBundle\Entity\Utilisateur
+     */
+    public function getCommentaire()
+    {
+        return $this->commentaire;
     }
 }

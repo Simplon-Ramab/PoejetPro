@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Categorie
@@ -28,6 +30,16 @@ class Categorie
      */
     private $nom;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="Evenement", mappedBy="categorie")
+     */
+    private $evenements;
+
+    public function __construct()
+    {
+        $this->evenements = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -61,5 +73,41 @@ class Categorie
     public function getNom()
     {
         return $this->nom;
+    }
+
+
+
+    /**
+     * Add evenement
+     *
+     * @param \AppBundle\Entity\Evenement $evenement
+     *
+     * @return Categorie
+     */
+    public function addEvenement(\AppBundle\Entity\Evenement $evenement)
+    {
+        $this->evenements[] = $evenement;
+
+        return $this;
+    }
+
+    /**
+     * Remove evenement
+     *
+     * @param \AppBundle\Entity\Evenement $evenement
+     */
+    public function removeEvenement(\AppBundle\Entity\Evenement $evenement)
+    {
+        $this->evenements->removeElement($evenement);
+    }
+
+    /**
+     * Get evenements
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEvenements()
+    {
+        return $this->evenements;
     }
 }

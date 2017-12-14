@@ -44,6 +44,13 @@ class Commentaire
 
 
     /**
+     * @ORM\ManyToOne(targetEntity="Utilisateur", inversedBy="commentaires")
+     * @ORM\JoinColumn(name="utilisateur_id", referencedColumnName="id")
+     */
+    private $commentaire;
+
+
+    /**
      * Get id
      *
      * @return int

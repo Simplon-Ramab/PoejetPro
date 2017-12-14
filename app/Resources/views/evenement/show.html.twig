@@ -1,52 +1,100 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Evenement</h1>
+<div class="container">
+  <div class="divider"></div>
+  <div class="col s12 m11 l11">
+  <div class="divider"></div>
+    <h3 class="center-align">{{ evenement.titre | capitalize}} du {% if evenement.dateDebut %}{{ evenement.dateDebut|date('d-m-Y') }}{% endif %}</h3>
+    <hr>
+    <div class="divider"></div>
+    <div class="row">
+      <div class="col m11">
+        <div class="">
+          <img src="{{ asset(evenement.getCoverWebPath) }}" class="materialboxed" />
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+        <h3 class="center-align">Informations</h3>
+        <hr>
+          <div class="divider"></div>
+        <div class="row">
+          <div class="col s12 m7 l7 card">
+            <p>{{ evenement.description|raw }}</p>
+          </div>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ evenement.id }}</td>
-            </tr>
-            <tr>
-                <th>Titre</th>
-                <td>{{ evenement.titre }}</td>
-            </tr>
-            <tr>
-                <th>Datedebut</th>
-                <td>{% if evenement.dateDebut %}{{ evenement.dateDebut|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Datefin</th>
-                <td>{% if evenement.dateFin %}{{ evenement.dateFin|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Heuredebut</th>
-                <td>{% if evenement.heureDebut %}{{ evenement.heureDebut|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Heurefin</th>
-                <td>{% if evenement.heureFin %}{{ evenement.heureFin|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Place</th>
-                <td>{{ evenement.place }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('evenement_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('evenement_edit', { 'id': evenement.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+          <div class="col s12 m4 l4 card offset-m1 offset-l1">
+
+            <p>Date: {% if evenement.dateDebut %}{{ evenement.dateDebut|date('d-m-Y') }}{% endif %} au {% if evenement.dateFin %}{{ evenement.dateFin|date('d-m-Y ') }}{% endif %}</p>
+            <p>Horaire: {% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i:s') }}{% endif %} - {% if evenement.heureFin %}{{ evenement.heureFin|date('H:i:s') }}{% endif %}</p>
+            <p>Ville: {{ evenement.utilisateur.ville |capitalize}}</p>
+            <p>Catégorie: {{ evenement.categorie.nom }}</p>
+            <p>Nombre de participants: {{ evenement.place }}</p>
+            <p>Nombre place disponibles: {{ evenement.place - evenement.participants|length }}</p>
+            <p>Organisateur: <span class="cyan-text">{{ evenement.utilisateur.prenom |capitalize}}</span></p>
+            <div class="row ">
+              <div class="center-align">
+                <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Contacter</a>
+                  <!-- Modal Structure -->
+                  <div id="modal1" class="modal">
+                    <div class="modal-content">
+
+                        {{ render(controller(
+                            'AppBundle\\Controller\\EvenementController::Participer', {evenement:evenement}
+                        )) }}
+            
+
+                    </div>
+                    <div class="modal-footer">
+                      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                    </div>
+                  </div>
+                <a href="{{ path('inscrire', { 'id': evenement.id }) }}" class="btn">S'inscrire</a>
+                <a href="{{ path('desinscrire', { 'id': evenement.id }) }}" class="btn">Se desinscrire</a>
+
+            </div>
+          </div>
+
+            </div>
+
+
+        </div>
+        <div class="divider"></div>
+        <h3 class="center-align">Commentaires</h3>
+        <hr>
+
+        <a href="{{ path('evenement_new') }}" class="btn">Créer un événement</a>
+
+
+
+</div>
+</div>
+
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+
+img {
+  width:100%;
+  padding-top:10px;
+}
+.card p{
+  overflow-wrap: break-word;
+}
+
+</style>
+{% endblock %}
+
+{% block javascripts %}
+  <script >
+
+  $(document).ready(function(){
+
+      $('#modal1').modal();
+});
+
+  </script>
 {% endblock %}

@@ -1,0 +1,103 @@
+
+
+{% block footer %}
+
+<footer class="page-footer cyan white">
+  <div class="container">
+    <div class="row">
+      <hr>
+      <div class="col l4 s12 grey-text text-darken-3">
+        <h5 >Instagram</h5>
+      </div>
+      <div class="col l4 s12 grey-text text-darken-3">
+        <h5>VideHome à venir</h5>
+        <p >You can use rows and columns here to organize your footer content.</p>
+      </div>
+      <div class="col l4 s12 grey-text text-darken-3">
+        <h5>Facebook</h5>
+      <div class="fb-page" data-href="https://www.facebook.com/VideHomeFrance/" data-tabs="timeline" data-width="400" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/VideHomeFrance/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/VideHomeFrance/">Videhome</a></blockquote></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container grey-text text-darken-3">
+    © 2017 copyright VideHome
+    <a class="grey-text text-darken-3 right" href="#!">More Links</a>
+    </div>
+  </div>
+</footer>
+
+{% block javascripts %}
+  <script >
+
+  (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.11';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+  </script>
+{% endblock %}
+
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  .divider{
+    height: 2em;
+    background-color: #fff;
+  }
+
+  h5, h4, h3{
+    color: #00bcd4;
+  }
+
+  .btn, .btn-large{
+    background-color: #ff9800;
+  }
+
+  .btn:hover, .btn-large:hover, .btn:active, .btn-large:active, .btn:focus, .btn-large:focus{
+    background-color: #f57c00;
+  }
+
+  .collection a.collection-item:not(.active):hover {
+    background-color: rgba(255, 152, 0, 0.6);
+}
+
+hr {
+	height: 1px;
+  width: 300px;
+  opacity:0.6;
+	border: 0;
+	color: #bdbdbd;
+	background-color: #bdbdbd;
+  margin-top: 2.5rem;
+	}
+
+.pagination li.active {
+    background-color: #ff9800;
+}
+
+.input-field .prefix.active{
+  color: #00bcd4;
+}
+
+  main {
+    flex: 1 0 auto;
+  }
+@media screen and (min-width: 200px) and (max-width: 640px) {
+  .fb-page{
+    width: 350px;
+  }
+    }
+
+</style>
+{% endblock %}

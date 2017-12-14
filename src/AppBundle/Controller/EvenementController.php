@@ -3,9 +3,13 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Evenement;
+use AppBundle\Entity\Utilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 
 /**
  * Evenement controller.
@@ -33,18 +37,35 @@ class EvenementController extends Controller
 
     /**
      * Creates a new evenement entity.
-     *
+     * @Security("has_role('ROLE_USER')")
      * @Route("/new", name="evenement_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
     {
         $evenement = new Evenement();
+        $evenement->setUtilisateur($this ->container->get('security.token_storage')->getToken()->getUser());
         $form = $this->createForm('AppBundle\Form\EvenementType', $evenement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            // $file contient l'image nouvellement uploadée
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+            $file = $evenement->getFile();
+
+            // Génération d'un nom unique pour l'image (pour éviter les collisions à l'enregistrement)
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+
+            // Déplacement l'image dans le dossier
+            $file->move(
+                $evenement->getCoverUploadDirectory(),
+                $fileName
+            );
+
+            // On met à jour la propriété cover
+            $evenement->setCover($fileName);
+
             $em->persist($evenement);
             $em->flush();
 
@@ -75,7 +96,7 @@ class EvenementController extends Controller
 
     /**
      * Displays a form to edit an existing evenement entity.
-     *
+     * @Security("has_role('ROLE_USER')")
      * @Route("/{id}/edit", name="evenement_edit")
      * @Method({"GET", "POST"})
      */
@@ -100,7 +121,7 @@ class EvenementController extends Controller
 
     /**
      * Deletes a evenement entity.
-     *
+     * @Security("has_role('ROLE_USER')")
      * @Route("/{id}", name="evenement_delete")
      * @Method("DELETE")
      */
@@ -133,4 +154,68 @@ class EvenementController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * Inscription à un evenements.
+     * @Route("/{id}/add", name="inscrire", requirements={"id": "\d+"})
+     * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param Evenement $evenement
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+     public function Participer(Request $request, Evenement $evenement)
+
+     {
+         $editForm = $this->createForm('AppBundle\Form\EvenementType', $evenement);
+         $editForm->setData($evenement->addParticipant(
+             $this->container
+             ->get('security.token_storage')
+             ->getToken()
+             ->getUser()
+         ));
+         $editForm->handleRequest($request);
+         if ($editForm->isSubmitted() && $editForm->isValid() &&
+             count($evenement->getParticipants()) <= $evenement->getPlace()) {
+             $em = $this->getDoctrine()->getManager();
+             $em->flush();
+             return $this->redirectToRoute('evenement_index');
+         }
+         return $this->render('evenement/show_add_event.html.twig', array(
+             'evenements' => $evenement,
+             'edit_form' => $editForm->createView(),
+         ));
+     }
+
+     /**
+      * Inscription à un evenements.
+      * @Route("/{id}/supprimer", name="desinscrire", requirements={"id": "\d+"})
+      * @Method({"GET", "POST"})
+      * @param Request $request
+      * @param Evenement $evenement
+      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+      */
+      public function Desinscrire(Request $request, Evenement $evenement)
+
+      {
+          $editForm = $this->createForm('AppBundle\Form\EvenementType', $evenement);
+          $editForm->setData($evenement->removeParticipant(
+              $this->container
+              ->get('security.token_storage')
+              ->getToken()
+              ->getUser()
+          ));
+          $editForm->handleRequest($request);
+          if ($editForm->isSubmitted() && $editForm->isValid() &&
+              count($evenement->getParticipants()) <= $evenement->getPlace()) {
+              $em = $this->getDoctrine()->getManager();
+              $em->flush();
+              return $this->redirectToRoute('evenement_index');
+          }
+          return $this->render('evenement/show_remove_event.html.twig', array(
+              'evenements' => $evenement,
+              'edit_form' => $editForm->createView(),
+          ));
+      }
+
+
 }

@@ -3,6 +3,10 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Evenement
@@ -70,16 +74,100 @@ class Evenement
      */
     private $place;
 
+    /**
+    * @const path to cover directory
+    */
+    const COVER_DIRECTORY = '/images/imagevent/';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $cover;
+
+    /**
+     * @var File
+     *
+     * @Assert\File(mimeTypes={ "image/jpeg","image/png"  })
+     */
+    private $file;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="evenements")
+    * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id")
+    */
+    private $categorie;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Utilisateur", inversedBy="evenements")
+     * @ORM\JoinColumn(name="utilisateur_id", referencedColumnName="id")
+     */
+    private $utilisateur;
+
+
+    /**
+    * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Utilisateur", inversedBy="evenements")
+    * @ORM\JoinTable(name="participation")
+    */
+   private $participants;
+
+
+    /**
+     * Get Cover
+     *
+     * @return string
+     */
+    public function getCover()
+    {
+        return $this->cover;
+    }
+
+    /**
+     * Set cover
+     *
+     * @param string $cover
+     *
+     * @return Article
+     */
+    public function setCover($cover)
+    {
+        $this->cover = $cover;
+
+        return $this;
+    }
+
+    /**
+     * @return File
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param File $file
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
+
+
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->setDateDebut(new \Datetime());
-        $this->setDateFin(new \Datetime());
-        $this->setHeureDebut(new \Datetime());
-        $this->setHeureFin(new \Datetime());
+
+        $this->setDateDebut(new \Datetime('now'));
+        $this->setDateFin(new \Datetime('now'));
+        $this->setHeureDebut(new \Datetime('now'));
+        $this->setHeureFin(new \Datetime('now'));
+        $this->participants = new ArrayCollection();
+
     }
 
 
@@ -115,6 +203,31 @@ class Evenement
     public function getTitre()
     {
         return $this->titre;
+    }
+
+
+    /**
+     * Set participants
+     *
+     * @param string $participants
+     *
+     * @return Evenement
+     */
+    public function setParticipants($participants)
+    {
+        $this->participants = $participants;
+
+        return $this;
+    }
+
+    /**
+     * Get participants
+     *
+     * @return string
+     */
+    public function getParticipants()
+    {
+        return $this->participants;
     }
 
 
@@ -262,5 +375,115 @@ class Evenement
     public function getPlace()
     {
         return $this->place;
+    }
+
+
+    /**
+     * On part de notre class et on remonte jusqu'au dossier web
+     * Chemin physique sur le serveur du dossier d'upload
+     *
+     * @return string
+     */
+    public function getCoverUploadDirectory()
+    {
+        return __DIR__ . "/../../../web" . self::COVER_DIRECTORY;
+    }
+
+
+    /**
+     * Chemin physique de l'image sur le serveur
+     *
+     * @return string
+     */
+    public function getCoverAbsolutePath()
+    {
+        return $this->getCoverUploadDirectory() . $this->getCover();
+    }
+
+    /**
+     * Chemin de l'image via l'URL, servira dans pour l'affichage dans les templates twig
+     *
+     * @return string
+     */
+    public function getCoverWebPath()
+    {
+        return self::COVER_DIRECTORY . $this->getCover();
+    }
+
+
+
+
+
+
+    /**
+     * Set categorie
+     *
+     * @param \AppBundle\Entity\Categorie $categorie
+     *
+     * @return Evenement
+     */
+    public function setCategorie(\AppBundle\Entity\Categorie $categorie = null)
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * Get categorie
+     *
+     * @return \AppBundle\Entity\Categorie
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
+
+    /**
+     * Set utilisateur
+     *
+     * @param \AppBundle\Entity\Utilisateur $utilisateur
+     *
+     * @return Evenement
+     */
+    public function setUtilisateur(\AppBundle\Entity\Utilisateur $utilisateur)
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return \AppBundle\Entity\Utilisateur
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
+    }
+
+    /**
+     * Add participant
+     *
+     * @param \AppBundle\Entity\Utilisateur $participant
+     *
+     * @return Evenement
+     */
+    public function addParticipant(\AppBundle\Entity\Utilisateur $participant)
+    {
+        $this->participants[] = $participant;
+
+        return $this;
+    }
+
+    /**
+     * Remove participant
+     *
+     * @param \AppBundle\Entity\Utilisateur $participant
+     */
+    public function removeParticipant(\AppBundle\Entity\Utilisateur $participant)
+    {
+        $this->participants->removeElement($participant);
     }
 }

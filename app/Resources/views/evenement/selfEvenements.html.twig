@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block content %}
+    <h4 >Mes evenements</h4>
+
+        {% for evenement in evenements|reverse %}
+          <div class="card">
+        <div class="row">
+          <div class="col l3 m3 s12">
+            <a href="{{ path('evenement_show', { 'id': evenement.id }) }}"><img src="{{ asset(evenement.getCoverWebPath) }}" alt="" class="scale"></a>
+          </div>
+          <div class="col l6 m6 s12">
+            <h5 class="title">{{ evenement.titre |capitalize }}</h5>
+            <p>{% if evenement.dateDebut %}{{ evenement.dateDebut|date('d M') }}{% endif %} au {% if evenement.dateFin %}{{ evenement.dateFin|date('d M Y') }}{% endif %}<br>
+               {% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i') }}{% endif %} à {% if evenement.heureFin %}{{ evenement.heureFin|date('H:i') }}{% endif %}<br>
+               {{ evenement.categorie.nom }}<br>
+               {{ evenement.utilisateur.prenom }}<br>
+               {{ evenement.place }}
+            </p>
+          </div>
+          <div class="col l1 m1 s12">
+            <div class="btnpadding">
+              <a href="{{ path('evenement_show', { 'id': evenement.id }) }}" class="btn">Voir</a>
+            </div class="btnpadding" >
+            <div>
+              <a href="#" class="btn">S'inscrire</a>
+            </div>
+          </div>
+        </div>
+
+        </div>
+        {% endfor %}
+                  <a class='dropdown-button btn' href='#' data-activates='dropdown1'>Actions</a>
+                    <ul id='dropdown1' class='dropdown-content'>
+                        <li>
+                            <a href="{{ path('evenement_show', { 'id': evenement.id }) }}">Voir</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ path('evenement_edit', { 'id': evenement.id }) }}">Modifier</a>
+                        </li>
+                            <li>
+                              {#<a href="{{ path('evenement_delete', { 'id': evenement.id }) }}">Emprunter</a>#}
+                            </li>
+                    </ul>
+
+    <ul>
+        <li>
+            <a class="btn pink darken-1" href="{{ path('evenement_new') }}">Ajouter un evenement</a>
+        </li>
+    </ul>
+
+  {% endblock %}

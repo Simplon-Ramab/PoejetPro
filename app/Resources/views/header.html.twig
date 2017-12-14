@@ -3,9 +3,11 @@
 <div class="navbar-fixed">
   <nav class="transparent z-depth-0">
     <div class="nav-wrapper container-fluid">
-      <a href="#" class="brand-logo">VideHome</a>
+      <a href="/" class="brand-logo"><img src="{{ asset('images/videhomelogo.png') }}" ></a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <li class="col md 3"><a href="{{ path('evenement_index') }}"><i class="fa fa-home" aria-hidden="true"></i>VideHome</a></li>
             <!--{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |-->
             <li class="col md 3"><a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user" aria-hidden="true"></i>
               {{ 'Mon compte'|trans({}, 'FOSUserBundle') }}
@@ -14,11 +16,30 @@
               {{ 'Deconnexion'|trans({}, 'FOSUserBundle') }}
             </a></li>
         {% else %}
-        <li class="col md 3"><a href="{{ path('fos_user_security_login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i>
-          Connexion</a></li>
-        <li><a href="{{ path('fos_user_registration_register') }}"><i class="fa fa-user-plus" aria-hidden="true"></i>
-          Inscription</a></li>
-          {% endif %}
+            <li class="col md 3"><a href="{{ path('evenement_index') }}"><i class="fa fa-home" aria-hidden="true"></i>VideHome</a></li>
+            <li class="col md 3"><a href="{{ path('fos_user_security_login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i>
+              Connexion</a></li>
+            <li><a href="{{ path('fos_user_registration_register') }}"><i class="fa fa-user-plus" aria-hidden="true"></i>
+              Inscription</a></li>
+        {% endif %}
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <li class="col md 3"><a href="{{ path('evenement_index') }}"><i class="fa fa-home" aria-hidden="true"></i>VideHome</a></li>
+            <!--{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |-->
+            <li class="col md 3"><a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user" aria-hidden="true"></i>
+              {{ 'Mon compte'|trans({}, 'FOSUserBundle') }}
+            </a></li>
+            <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>
+              {{ 'Deconnexion'|trans({}, 'FOSUserBundle') }}
+            </a></li>
+        {% else %}
+          <li><a href="{{ path('evenement_index') }}" class="white-text"><i class="fa fa-home" aria-hidden="true"></i>VideHome</a></li>
+          <li><a href="{{ path('fos_user_security_login') }}" class="white-text"><i class="fa fa-sign-in" aria-hidden="true"></i>
+            Connexion</a></li>
+          <li><a href="{{ path('fos_user_registration_register') }}" class="white-text"><i class="fa fa-user-plus" aria-hidden="true"></i>
+            Inscription</a></li>
+        {% endif %}
       </ul>
     </div>
   </nav>
@@ -48,12 +69,34 @@ $(function(){
 	});
 });
 
+$('.button-collapse').sideNav({
+      menuWidth: 300, // Default is 300
+      edge: 'right', // Choose the horizontal origin
+      closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+      draggable: true, // Choose whether you can drag to open on touch screens,
+      onOpen: function(el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
+      onClose: function(el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
+    }
+  );
 
 </script>
 {% endblock %}
 
 {% block stylesheets %}
 <style>
+
+body{
+  color: #424242;
+  font-family: 'Roboto';
+}
+
+.brand-logo>img{
+  position:relative;
+  padding: 5px;
+  width:45%;
+  left: 25px;
+  margin-top: 15px;
+}
 
 nav ul a {
   background-color: #26c6da;
@@ -88,6 +131,16 @@ nav ul a:hover {
 
 nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
     line-height: 34px;
+}
+
+@media screen and (max-width: 900px) {
+  .brand-logo>img{
+    position:relative;
+    padding: 5px;
+    width:55%;
+    left: 50px;
+    margin-top: 2px;
+  }
 }
 
 </style>

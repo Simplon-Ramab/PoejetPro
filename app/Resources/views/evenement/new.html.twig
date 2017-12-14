@@ -1,18 +1,29 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Evenement creation</h1>
+<div class="container">
 
+    <div class="row" style="padding-top: 8em">
+      <div class="col m11 l11 animated bounceInDown">
+        <div class="card-panel hoverable">
+    <h3 class="center-align">Créer votre événement</h3>
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Créer" />
+        {{ form_row(form.file) }}
+        <div class="divider"></div>
+        <input type="submit" value="Créer" class="btn"/>
+        <a href="{{ path('evenement_index') }}" class="btn">Retour aux événements </a>
     {{ form_end(form) }}
 
     <ul>
         <li>
-            <a href="{{ path('evenement_index') }}">Retour aux événements </a>
+
         </li>
     </ul>
+</div>
+    </div>
+  </div>
+      </div>
 {% endblock %}
 
 {% block javascripts %}
@@ -20,8 +31,8 @@
 
 $(document).ready(function() {
   $('.datepicker').pickadate({
+defaultDate: '01-01-2017',
 selectMonths: true,//Creates a dropdown to control month
-selectHours: true,//Creates a dropdown to control month
 selectYears: 15,//Creates a dropdown of 15 years to control year
 //The title label to use for the month nav buttons
 labelMonthNext: 'Mois suivant',
@@ -29,29 +40,32 @@ labelMonthPrev: 'Mois précedent',
 //The title label to use for the dropdown selectors
 labelMonthSelect: 'Selectionner Mois',
 labelYearSelect: 'Selectionner l\'année',
+min: ['now'],
+max: [2057,12,31],
 //Months and weekdays
 monthsFull: [ 'Janvier', 'Fevriér', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Decembre' ],
 monthsShort: [ 'Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Juil', 'Aoû', 'Sep', 'Oct', 'Nov', 'Dec' ],
 weekdaysFull: [ 'Dimanche', 'Lundi', 'Mardi', 'Mercrdi', 'Jeudi', 'Vendredi', 'Samedi' ],
 weekdaysShort: [ 'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam' ],
 //Materialize modified
-weekdaysLetter: [ 'S', 'L', 'M', 'M', 'J', 'V', 'S' ],
+weekdaysLetter: [ 'D', 'L', 'M', 'M', 'J', 'V', 'S' ],
 //Today and clear
 today: 'Aujourd\'hui',
 clear: 'Effacer',
 close: 'Fermer',
 //The format to show on the `input` element
-format: 'dd/mm/yyyy'
+format: 'd-m-yy',
 });
 
 
+
 $('.timepicker').pickatime({
-    default: 'Maintenant',
+    default: 'Now',
     twelvehour: false, // change to 12 hour AM/PM clock from 24 hour
     donetext: 'OK',
     cleartext: 'Effacer',
     canceltext: 'Fermer',
-    autoclose: false,
+    autoclose: true,
     vibrate: true // vibrate the device when dragging clock hand
 
 });

@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
@@ -47,44 +48,68 @@ class Utilisateur extends BaseUser
     /**
      * @var int
      *
-     * @ORM\Column(name="telephone", type="integer")
+     * @ORM\Column(name="telephone", type="integer", nullable=true)
      */
     private $telephone;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="numero", type="integer")
+     * @ORM\Column(name="numero", type="integer", nullable=true)
      */
     private $numero;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nomrue", type="string", length=255)
+     * @ORM\Column(name="nomrue", type="string", length=255, nullable=true)
      */
     private $nomrue;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ville", type="string", length=255)
+     * @ORM\Column(name="ville", type="string", length=255, nullable=true)
      */
     private $ville;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="codePostal", type="integer")
+     * @ORM\Column(name="codePostal", type="integer", nullable=true)
      */
     private $codePostal;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Pays", type="string", length=255)
+     * @ORM\Column(name="Pays", type="string", length=255, nullable=true)
      */
     private $pays;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Evenement", mappedBy="utilisateur")
+     */
+    private $utilisateurs;
+
+    /**
+    * Many Users have Many Events
+    * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Evenement", mappedBy="participants")
+    */
+   private $evenements;
+
+   /**
+   * @ORM\OneToMany(targetEntity="Commentaire", mappedBy="utilisateur")
+   */
+   private $commentaires;
+
+    public function __construct()
+    {
+        $this->dateInscription = new \DateTime('now');
+        $this->utilisateurs = new ArrayCollection();
+        $this->evenements = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
+    }
 
 
     /**
@@ -313,4 +338,72 @@ class Utilisateur extends BaseUser
         return $this->pays;
     }
 
+
+    /**
+     * Add utilisateur
+     *
+     * @param \AppBundle\Entity\Evenement $utilisateur
+     *
+     * @return Utilisateur
+     */
+    public function addUtilisateur(\AppBundle\Entity\Evenement $utilisateur)
+    {
+        $this->utilisateurs[] = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Remove utilisateur
+     *
+     * @param \AppBundle\Entity\Evenement $utilisateur
+     */
+    public function removeUtilisateur(\AppBundle\Entity\Evenement $utilisateur)
+    {
+        $this->utilisateurs->removeElement($utilisateur);
+    }
+
+    /**
+     * Get utilisateurs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUtilisateurs()
+    {
+        return $this->utilisateurs;
+    }
+
+    /**
+     * Add evenement
+     *
+     * @param \AppBundle\Entity\Evenement $evenement
+     *
+     * @return Utilisateur
+     */
+    public function addEvenement(\AppBundle\Entity\Evenement $evenement)
+    {
+        $this->evenements[] = $evenement;
+
+        return $this;
+    }
+
+    /**
+     * Remove evenement
+     *
+     * @param \AppBundle\Entity\Evenement $evenement
+     */
+    public function removeEvenement(\AppBundle\Entity\Evenement $evenement)
+    {
+        $this->evenements->removeElement($evenement);
+    }
+
+    /**
+     * Get evenements
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEvenements()
+    {
+        return $this->evenements;
+    }
 }
