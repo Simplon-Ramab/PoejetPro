@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<div class="slider z-depth-2" >
+<div class="slider z-depth-2">
     <ul class="slides">
       <li>
         <img src="{{ asset('images/livingroom.jpg') }}" > <!-- random image -->
@@ -20,6 +20,10 @@
       </li>
     </ul>
   </div>
+  <div class='scrolltop'>
+    <div class='scroll btn-floating btn-large cyan' ><i class="large material-icons cyan">keyboard_capslock</i></div>
+</div>
+
   <div class="divider"></div>
     <div class="section">
   <h4 class="center-align">Prochaines dates</h4>
@@ -71,12 +75,61 @@
         indicators: false,
         height: 800
       });
+  $(window).scroll(function() {
+      if ($(this).scrollTop() > 50 ) {
+          $('.scrolltop:hidden').stop(true, true).fadeIn();
+      } else {
+          $('.scrolltop').stop(true, true).fadeOut();
+      }
+  });
+
+  $(function(){$(".scroll").click(function(){$("html,body").animate({scrollTop:$(".slides").offset().top},"1000");return false})})
 });
+
+
   </script>
 {% endblock %}
 
 {% block stylesheets %}
 <style>
+.scrolltop {
+	display:none;
+	width:100%;
+	margin:0 auto;
+	position:fixed;
+	bottom:20px;
+	right:10px;
+}
+.scroll {
+	position:absolute;
+	right:10px;
+	bottom:10px;
+
+	margin: 0 0 0 0;
+	cursor:pointer;
+	transition: 0.5s;
+	-moz-transition: 0.5s;
+	-webkit-transition: 0.5s;
+	-o-transition: 0.5s;
+}
+.scroll:hover {
+	background:rgba(178,178,178,1.0);
+	transition: 0.5s;
+	-moz-transition: 0.5s;
+	-webkit-transition: 0.5s;
+	-o-transition: 0.5s;
+}
+.scroll:hover .large {
+	padding-top:-10px;
+}
+.scroll .large {
+	font-size:30px;
+	margin-left:1px;
+	transition: 0.5s;
+	-moz-transition: 0.5s;
+	-webkit-transition: 0.5s;
+	-o-transition: 0.5s;
+}
 
 /*
 orange => #ff9800

@@ -3,7 +3,7 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-    <p>{{ 'Vous êtes bien inscrit. Bienvuenue à VideHome'|trans({'%username%': user.username}) }}</p>
+    <p>{{ 'Vous êtes bien inscrit. Bienvenue à VideHome'|trans({'%username%': user.username}) }}</p>
     {% if targetUrl %}
     <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
     {% endif %}

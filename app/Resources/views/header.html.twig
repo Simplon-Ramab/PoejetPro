@@ -1,6 +1,6 @@
 
 {% block header %}
-<div class="navbar-fixed">
+<div class="navbar">
   <nav class="transparent z-depth-0">
     <div class="nav-wrapper container-fluid">
       <a href="/" class="brand-logo"><img src="{{ asset('images/videhomelogo.png') }}" ></a>
@@ -16,7 +16,7 @@
               {{ 'Deconnexion'|trans({}, 'FOSUserBundle') }}
             </a></li>
         {% else %}
-            <li class="col md 3"><a href="{{ path('evenement_index') }}"><i class="fa fa-home" aria-hidden="true"></i>VideHome</a></li>
+            <li class="col md 3"><a href="{{ path('evenement_index') }}">VideHome</a></li>
             <li class="col md 3"><a href="{{ path('fos_user_security_login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i>
               Connexion</a></li>
             <li><a href="{{ path('fos_user_registration_register') }}"><i class="fa fa-user-plus" aria-hidden="true"></i>
@@ -25,7 +25,7 @@
       </ul>
       <ul class="side-nav" id="mobile-demo">
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <li class="col md 3"><a href="{{ path('evenement_index') }}"><i class="fa fa-home" aria-hidden="true"></i>VideHome</a></li>
+            <li class="col md 3"><a href="{{ path('evenement_index') }}">VideHome</a></li>
             <!--{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |-->
             <li class="col md 3"><a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user" aria-hidden="true"></i>
               {{ 'Mon compte'|trans({}, 'FOSUserBundle') }}
@@ -34,7 +34,7 @@
               {{ 'Deconnexion'|trans({}, 'FOSUserBundle') }}
             </a></li>
         {% else %}
-          <li><a href="{{ path('evenement_index') }}" class="white-text"><i class="fa fa-home" aria-hidden="true"></i>VideHome</a></li>
+          <li><a href="{{ path('evenement_index') }}" class="white-text"></i>VideHome</a></li>
           <li><a href="{{ path('fos_user_security_login') }}" class="white-text"><i class="fa fa-sign-in" aria-hidden="true"></i>
             Connexion</a></li>
           <li><a href="{{ path('fos_user_registration_register') }}" class="white-text"><i class="fa fa-user-plus" aria-hidden="true"></i>
@@ -46,11 +46,6 @@
 </div>
 
 
-
-<div>
-    {% block fos_user_content %}
-    {% endblock fos_user_content %}
-</div>
 
 {% endblock %}
 
@@ -92,10 +87,9 @@ body{
 
 .brand-logo>img{
   position:relative;
-  padding: 5px;
-  width:45%;
+  padding: 2px;
+  width:65%;
   left: 25px;
-  margin-top: 15px;
 }
 
 nav ul a {
@@ -104,7 +98,7 @@ nav ul a {
   border: #26c6da 1px solid;
   font-size: 1.1rem;
   margin-right: 15px;
-  margin-top: 20px;
+  margin-top: 10px;
   border-radius: 2px;
 }
 
@@ -120,10 +114,6 @@ nav ul a:hover {
 
 }
 
-.navbar-fixed {
-  position: absolute;
-  z-index:999999999;
-}
 
 .nav-wrapper {
   padding-left: 5px;

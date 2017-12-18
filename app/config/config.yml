@@ -74,5 +74,9 @@ fos_user:
     firewall_name: main #nom du firewall créé dans security.yml
     user_class: AppBundle\Entity\Utilisateur #chemin vers votre entité User
     from_email:
-        address: "%rama" # variable présente dans votre parameters.yml, doit être renseigné sinon ça génère un bug
-        sender_name: "rama" # idem
+        address: "videhomefrance@gmail.com" # variable présente dans votre parameters.yml, doit être renseigné sinon ça génère un bug
+        sender_name: "VideHome" # VideHome
+    registration:
+        confirmation:
+            enabled: true
+            template:   FOSUserBundle:Registration:email.txt.twig

@@ -1,14 +1,16 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 <div class="container regis">
+  <a href="/" class="brand-logo animated zoomIn"><img src="{{ asset('images/logoblanc.png') }}" ></a>
   <div class="row" style="padding-top: 8em">
+
     <div class="col m6 offset-m3 animated bounceInDown">
       <div class="card-panel hoverable">
         {% if error %}
           <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
         <div class="row center-align ">
-          <i class="large material-icons cyan-text animated bounceInUp ">perm_identity</i>
+          <i class="large material-icons cyan-text">perm_identity</i>
         </div>
 
         <form action="{{ path("fos_user_security_check") }}" method="post">
@@ -36,8 +38,14 @@
 {% block stylesheets %}
 <style>
   body{
-    
     background-color: #00bcd4;
   }
+  .brand-logo > img {
+    position: absolute;
+    padding: 5px;
+    margin-left: 340px;
+    margin-top: 20px;
+  }
+
 </style>
 {% endblock %}
