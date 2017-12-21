@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
 <div class="container">
   <div class="divider"></div>
   <div class="col s12 m11 l11">
@@ -35,24 +36,14 @@
             <p>Nombre place disponibles: {{ evenement.place - evenement.participants|length }}</p>
             <p>Organisateur: <span class="cyan-text">{{ evenement.utilisateur.prenom |capitalize}}</span></p>
             <div class="row ">
+              {#{{ dump(date().date|date('d-m-Y'))}} #}
               <div class="center-align">
-                <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Contacter</a>
-                  <!-- Modal Structure -->
-                  <div id="modal1" class="modal">
-                    <div class="modal-content">
-
-                        {{ render(controller(
-                            'AppBundle\\Controller\\EvenementController::Participer', {evenement:evenement}
-                        )) }}
-            
-
-                    </div>
-                    <div class="modal-footer">
-                      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-                    </div>
-                  </div>
-                <a href="{{ path('inscrire', { 'id': evenement.id }) }}" class="btn">S'inscrire</a>
-                <a href="{{ path('desinscrire', { 'id': evenement.id }) }}" class="btn">Se desinscrire</a>
+                {% if evenement.isRegistered(app.user) == true %}
+                <p class =" white-text cyan" >vous êtes déja inscrit</p>
+                  <a href="{{ path('desinscrire', { 'id': evenement.id }) }}" class="btn">Se desinscrire</a>
+                  {% else %}
+               <a href="{{ path('inscrire', { 'id': evenement.id }) }}" class="btn">S'inscrire</a>
+                  {% endif %}
 
             </div>
           </div>
@@ -71,6 +62,7 @@
 
 </div>
 </div>
+
 
 {% endblock %}
 

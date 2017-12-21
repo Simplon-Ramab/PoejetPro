@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Evenement;
 use AppBundle\Entity\Utilisateur;
+use AppBundle\Entity\Categorie;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -157,6 +158,7 @@ class EvenementController extends Controller
 
     /**
      * Inscription à un evenements.
+     * @Security("has_role('ROLE_USER')")
      * @Route("/{id}/add", name="inscrire", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @param Request $request
@@ -188,6 +190,7 @@ class EvenementController extends Controller
 
      /**
       * Inscription à un evenements.
+       * @Security("has_role('ROLE_USER')")
       * @Route("/{id}/supprimer", name="desinscrire", requirements={"id": "\d+"})
       * @Method({"GET", "POST"})
       * @param Request $request
@@ -217,5 +220,23 @@ class EvenementController extends Controller
           ));
       }
 
+
+      /**
+       * Lists all categorie entities.
+       *
+       * @Route("/", name="recherche_index")
+       * @Method("GET")
+       */
+      public function rechercheAction()
+      {
+          $em = $this->getDoctrine()->getManager();
+          $motcle = $request ->get('motcle');
+
+          $repository = $em->getRepository('AppBundle:Evenement')->findAll();
+
+          return $this->render('evenement/index.html.twig', array(
+              'evenements' => $evenements,
+          ));
+      }
 
 }
