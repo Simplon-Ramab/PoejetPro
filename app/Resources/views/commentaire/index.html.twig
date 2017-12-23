@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+
 
 {% block body %}
     <h1>Commentaires list</h1>
@@ -15,6 +15,7 @@
         </thead>
         <tbody>
         {% for commentaire in commentaires %}
+        {{ dump(commentaire.utilisateur)}}
             <tr>
                 <td><a href="{{ path('commentaire_show', { 'id': commentaire.id }) }}">{{ commentaire.id }}</a></td>
                 <td>{{ commentaire.sujet }}</td>
@@ -37,7 +38,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('commentaire_new') }}">Create a new commentaire</a>
+            <a class="btn" href="{{ path('commentaire_new') }}">Create a new commentaire</a>
         </li>
     </ul>
 {% endblock %}

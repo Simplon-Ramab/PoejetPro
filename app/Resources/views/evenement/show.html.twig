@@ -36,24 +36,24 @@
             <p>Nombre place disponibles: {{ evenement.place - evenement.participants|length }}</p>
             <p>Organisateur: <span class="cyan-text">{{ evenement.utilisateur.prenom |capitalize}}</span></p>
             <div class="row ">
-              {#{{ dump(date().date|date('d-m-Y'))}} #}
               <div class="center-align">
                 {% if evenement.isRegistered(app.user) == true %}
                 <p class =" white-text cyan" >vous êtes déja inscrit</p>
                   <a href="{{ path('desinscrire', { 'id': evenement.id }) }}" class="btn">Se desinscrire</a>
                   {% else %}
-               <a href="{{ path('inscrire', { 'id': evenement.id }) }}" class="btn">S'inscrire</a>
+                 <a href="{{ path('inscrire', { 'id': evenement.id }) }}" class="btn">S'inscrire</a>
                   {% endif %}
-
+                </div>
             </div>
           </div>
-
-            </div>
-
 
         </div>
         <div class="divider"></div>
         <h3 class="center-align">Commentaires</h3>
+        <h3>Laissez un message</h3>
+
+         <div class="divider"> </div>
+
         <hr>
 
         <a href="{{ path('evenement_new') }}" class="btn">Créer un événement</a>

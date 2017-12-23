@@ -487,12 +487,14 @@ class Evenement
         $this->participants->removeElement($participant);
     }
 
-    public function isRegistered(\AppBundle\Entity\Utilisateur $participant) {
+    public function isRegistered(\AppBundle\Entity\Utilisateur $participant=null) {
+      if($participant!=null){
       foreach ($this->participants as $key => $value) {
           if($value->getId() == $participant->getId()) {
             return true;
           }
-      }
+        }
       return false;
+        }
     }
 }

@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Commentaire;
+use AppBundle\Entity\Utilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -40,6 +41,7 @@ class CommentaireController extends Controller
     public function newAction(Request $request)
     {
         $commentaire = new Commentaire();
+        $commentaire->setUtilisateur($this ->container->get('security.token_storage')->getToken()->getUser());
         $form = $this->createForm('AppBundle\Form\CommentaireType', $commentaire);
         $form->handleRequest($request);
 

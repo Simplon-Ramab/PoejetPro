@@ -119,13 +119,7 @@
           {% endfor %}
           <div class="">
             <ul class="pagination">
-              <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-              <li class="active"><a href="#!" class="btn">1</a></li>
-              <li class="waves-effect"><a href="#!" class="btn">2</a></li>
-              <li class="waves-effect"><a href="#!" class="btn">3</a></li>
-              <li class="waves-effect"><a href="#!" class="btn">4</a></li>
-              <li class="waves-effect"><a href="#!" class="btn">5</a></li>
-              <li class="waves-effect"><a href="#!" class="btn"><i class="material-icons">chevron_right</i></a></li>
+              <li class="waves-effect btn">{{ knp_pagination_render(evenements) }}</li>
             </ul>
           </div>
       </div>

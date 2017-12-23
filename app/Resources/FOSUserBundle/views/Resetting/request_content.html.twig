@@ -1,11 +1,37 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
-    <div>
-        <label for="username">{{ 'resetting.request.username'|trans }}</label>
-        <input type="text" id="username" name="username" required="required" />
+<div class="container regis  center-align">
+  <a href="/" class="brand-logo animated zoomIn "><img  src="{{ asset('images/logoblanc.png') }}" ></a>
+  <div class="row" >
+    <div class="col m6 offset-m3 animated bounceInDown s12">
+      <div class="card-panel hoverable">
+        <div class="row">
+          <i class="medium material-icons cyan-text ">build</i>
+        </div>
+        <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request" >
+            <div>
+                <label for="username" >{{ 'resetting.request.username'|trans }}</label>
+                <input type="text" id="username" name="username" required="required" />
+            </div>
+            <div>
+                <input type="submit" value="{{ 'resetting.request.submit'|trans }}" class="btn orange"/>
+            </div>
+        </form>
+      </div>
     </div>
-    <div>
-        <input type="submit" value="{{ 'resetting.request.submit'|trans }}" />
-    </div>
-</form>
+  </div>
+  <p class="white-text">Indiquez votre adresse e-mail ci-dessus. Nous vous enverrons des instructions concernant la modification de votre mot de passe.</p>
+  <a href="/" class="btn orange">Retourner à l'accueil</a>
+</div>
+
+{% block stylesheets %}
+<style>
+  body{
+    background-color: #00bcd4;
+
+  }
+ .brand-logo>img:hover{
+   border: 1px solid white;
+ }
+</style>
+{% endblock %}

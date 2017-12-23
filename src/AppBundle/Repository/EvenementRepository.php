@@ -12,9 +12,9 @@ class EvenementRepository extends \Doctrine\ORM\EntityRepository
 {
   public function findEvenementsBytitre($motcle){
     $query = $this ->createQueryBuilder('f')
-      ->where('E.nom like :nom')
+      ->where('f.nom like :nom')
       ->setParameter('nom', $motscle. '%')
-      ->orderBy('E.nom', 'ASC')
+      ->orderBy('f.nom', 'ASC')
       ->getQuery();
 
       return $query->getResult();

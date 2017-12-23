@@ -25,11 +25,16 @@ class EvenementController extends Controller
      * @Route("/", name="evenement_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $evenements = $em->getRepository('AppBundle:Evenement')->findAll();
+        $listeEvenements = $em->getRepository('AppBundle:Evenement')->findAll();
+        $evenements  = $this->get('knp_paginator')->paginate(
+        $listeEvenements,
+        $request->query->get('page', 1)/*le numéro de la page à afficher*/,
+          10/*nbre d'éléments par page*/
+    );
 
         return $this->render('evenement/index.html.twig', array(
             'evenements' => $evenements,
@@ -221,6 +226,7 @@ class EvenementController extends Controller
       }
 
 
+
       /**
        * Lists all categorie entities.
        *
@@ -231,9 +237,7 @@ class EvenementController extends Controller
       {
           $em = $this->getDoctrine()->getManager();
           $motcle = $request ->get('motcle');
-
-          $repository = $em->getRepository('AppBundle:Evenement')->findAll();
-
+          $repository = $em->getRepository('AppBundle:Evenement')->findEvenementsBytitre($motcle);
           return $this->render('evenement/index.html.twig', array(
               'evenements' => $evenements,
           ));

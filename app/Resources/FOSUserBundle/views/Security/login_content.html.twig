@@ -1,10 +1,10 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div class="container regis">
+<div class="container regis center-align">
   <a href="/" class="brand-logo animated zoomIn"><img src="{{ asset('images/logoblanc.png') }}" ></a>
-  <div class="row" style="padding-top: 8em">
+  <div class="row">
 
-    <div class="col m6 offset-m3 animated bounceInDown">
+    <div class="col m6 s12 offset-m3 animated bounceInDown">
       <div class="card-panel hoverable">
         {% if error %}
           <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -12,7 +12,6 @@
         <div class="row center-align ">
           <i class="large material-icons cyan-text">perm_identity</i>
         </div>
-
         <form action="{{ path("fos_user_security_check") }}" method="post">
           {% if csrf_token %}
               <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
@@ -26,12 +25,18 @@
 
           <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
           <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+          <div class="divider"></div>
           <div class="center-align">
             <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="  waves-effect waves-light btn amber darken-2"/>
-            <a href="{{ path('fos_user_registration_register') }}" class="  waves-effect waves-light btn amber darken-2">S'inscrire</a>
+          </div>
+          <div class="center-align" style="padding-top:15px">
+          <a href="{{ path('fos_user_registration_register') }}" class="orange-text">S'inscrire ?</a>
           </div>
         </form>
       </div>
+      <div class="center-align">
+      <a href="{{ path("fos_user_resetting_request")}}" class="white-text">Mot de passe oublié ?</a>
+    </div>
     </div>
   </div>
 
@@ -40,11 +45,10 @@
   body{
     background-color: #00bcd4;
   }
-  .brand-logo > img {
-    position: absolute;
-    padding: 5px;
-    margin-left: 340px;
-    margin-top: 20px;
+
+  .divider{
+    background-color:white;
+    height: 20px;
   }
 
 </style>

@@ -47,7 +47,8 @@ class Commentaire
      * @ORM\ManyToOne(targetEntity="Utilisateur", inversedBy="commentaires")
      * @ORM\JoinColumn(name="utilisateur_id", referencedColumnName="id")
      */
-    private $commentaire;
+    private $utilisateur;
+    
 
 
     /**
@@ -154,5 +155,29 @@ class Commentaire
     public function getCommentaire()
     {
         return $this->commentaire;
+    }
+
+    /**
+     * Set utilisateur
+     *
+     * @param \AppBundle\Entity\Utilisateur $utilisateur
+     *
+     * @return Commentaire
+     */
+    public function setUtilisateur(\AppBundle\Entity\Utilisateur $utilisateur = null)
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return \AppBundle\Entity\Utilisateur
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
     }
 }

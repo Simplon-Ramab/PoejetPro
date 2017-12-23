@@ -31,35 +31,69 @@
   <div id="wrapper">
     <div class="container">
       <div class="row">
-        {% for evenement in evenements %}
+        {% for evenement in evenements|reverse  %}
+
         <!--|slice(1, 4)-->
-        <div class="col s12 m4 l3">
-          <div class="card medium z-depth-2">
-            <div class="card-image">
-
-              <a href="{{ path('evenement_show', { 'id': evenement.id }) }}"><img class="responsive-img" src="{{evenement.getCoverWebPath}}">  </a>
-            </div>
-            <div class="card-stacked">
-              <div class="card-content">
-                <a href="{{ path('evenement_show', { 'id': evenement.id }) }}"><h6 class="header">{{ evenement.titre }}</h6></a>
-                <p>{{ evenement.dateDebut|date('d M Y') }} à Lyon</p>
-                <p>{{ evenement.place}} places</p>
-                <p>{{ evenement.categorie.nom}}</p>
-                <a class="btn-floating halfway-fab waves-effect waves-light red" href="{{ path('evenement_show', { 'id': evenement.id }) }}"><i class="material-icons">add</i></a>
-              </div>
-            </div>
-          </div>
-          <div class="divider"></div>
+        <div class="col s12 m4">
+      <div class="card" style="height: 28em">
+        <div class="card-image">
+          <img src="{{evenement.getCoverWebPath}}">
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
         </div>
-
+        <div class="card-content">
+          <h6>{{ evenement.titre}}</h6>
+          <h6>{{ evenement.dateDebut|date('d M Y') }}</h6>
+          <p>de {% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i:s') }}{% endif %} à {% if evenement.heureFin %}{{ evenement.heureFin|date('H:i:s') }}{% endif %}</p>
+          <p>à {{ evenement.utilisateur.ville |capitalize}}</p>
+          <p>Catégorie: {{ evenement.categorie.nom }}</p>
+            {% if  evenement.place <= evenement.participants|length  %}
+            <p>Places disponibles: <span class=" badge green white-text">Complet</span></p>
+            {% else %}
+          <p>Places disponibles: {{ evenement.place - evenement.participants|length }}</p>
+            {% endif %}
+          <p>Organisateur: <span class="cyan-text">{{ evenement.utilisateur.prenom |capitalize}}</span></p>
+        </div>
+      </div>
+    </div>
         {% endfor %}
       </div>
+
+
     </div>
     </div>
   </div>
   <div class="divider"></div>
   <div class="section">
 <h4 class="center-align">Bientôt complet</h4>
+<div id="wrapper">
+  <div class="container">
+    <div class="row">
+      {% for evenement in evenements|reverse  %}
+      {% if  evenement.place - evenement.participants|length < 5 %}
+      <!--|slice(1, 4)-->
+      <div class="col s12 m4">
+    <div class="card" style="height: 28em">
+      <div class="card-image">
+        <img src="{{evenement.getCoverWebPath}}">
+        <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+      </div>
+      <div class="card-content">
+        <h5>{{ evenement.dateDebut|date('d M Y') }}</h5>
+        <p>de {% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i:s') }}{% endif %} à {% if evenement.heureFin %}{{ evenement.heureFin|date('H:i:s') }}{% endif %}</p>
+        <p>à {{ evenement.utilisateur.ville |capitalize}}</p>
+        <p>Catégorie: {{ evenement.categorie.nom }} </p>
+        <p>Place disponibles: <span class=" badge red white-text">{{ evenement.place - evenement.participants|length }}</span></p>
+        <p>Organisateur: <span class="cyan-text">{{ evenement.utilisateur.prenom |capitalize}}</span></p>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+      {% endfor %}
+    </div>
+
+
+  </div>
+  </div>
 <div class="divider"></div>
 </div>
 
@@ -137,13 +171,19 @@
 orange => #ff9800
 cyan > #00bcd4
 */
+.card img {
+    max-height: 200px;
+    object-fit: cover;
+}
 .card.medium {
     height: 300px;
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14);
 }
-
+.card img.materialized.active {
+    max-height: none;
+    object-fit: none;
+}
 .caption{
-  margin-top: 15em;
+  margin-top: 5em;
 }
 
 i.material-icons{
