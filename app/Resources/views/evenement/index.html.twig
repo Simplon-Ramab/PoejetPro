@@ -5,55 +5,44 @@
 
 <!-- Content -->
 <div class="parallax-container center valign-wrapper">
-  <div class="container" style="top:55px;">
+  <div class="container" style="top:55px; height: 10vh;">
     <div class="row">
       <div class="col s12 white-text">
         <div class="row">
-          <form class="col s12 m10 l10 white offset-m2 offset-l1" method="post" action="{{ path('recherche_index') }}">
+          <form class="col s12 m10 l10 white offset-m2 offset-l1" action="{{ path('evenement_index') }}" method="get">
             <div class="row" style="padding-right:25px;">
-              <div class="input-field col s12 m3 l3">
-                <i class="material-icons prefix">date_range</i>
-                <input type="text" class="datepicker">
-                <label for="icon_date">Date</label>
-              </div>
-              <div class="input-field col s12 m4 l4">
+              <div class="input-field col s12 m10 l10">
                 <i class="material-icons prefix">edit</i>
-                <input id="icon_mot" type="text" class="validate" name="motscle">
+                <input id="icon_mot" type="text" class="validate" name="filter" >
                 <label for="icon_mot">Mot clé</label>
               </div>
-              <div class="input-field col s12 m4 l4">
-                <i class="material-icons prefix">location_on</i>
-                <input id="icon_ville" type="text" class="validate">
-                <label for="icon_ville">Ville ou code postal</label>
-              </div>
               <div class="input-field col s12 m1 l1">
-                <a class="btn-floating btn-large waves-effect waves-light orange " type="submit"><i class="material-icons">search</i></a>
+                <button class="btn-floating btn-large waves-effect waves-light orange " type="submit"><i class="material-icons">search</i></button>
               </div>
             </div>
           </form>
         </div>
+        <div class="divider transparent"></div>
+        <div class="divider transparent"></div>
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        <a href="{{ path('evenement_new') }}" class="btn">Créer un événement</a>
+          <a href="{{ path('evenement_new') }}" class="btn">Créer un événement</a>
         {% else %}
-            <a href="/login" class="btn">Créer un événement</a>
-        {% endif %}</li>
+          <a href="/login" class="btn">Créer un événement</a>
+        {% endif %}
       </div>
     </div>
   </div>
   <div class="parallax">
     <img src="{{ asset('images/sacshop.jpg') }}">
   </div>
-
 </div>
 <div class="divider"></div>
   <div class="col m12 s12 l2">
     <div class="row">
       <div class="col l3 s12 m3 offset-m1 offset-l1">
-        <div class="collection ">
-
+        <div class="collection">
           <h4 class="cyan-text center-align">Catégories</h4>
           <hr>
-
           <a href="#!" class="collection-item grey-text text-darken-3">Vide-dressing</a>
           <a href="#!" class="collection-item grey-text text-darken-3">Vide-grenier</a>
           <a href="#!" class="collection-item grey-text text-darken-3">Jeux vidéo</a>
@@ -66,65 +55,68 @@
         </div>
       </div>
       <div class="col l6 s12 m6">
-        <div id="tri">
-        <select class="icons">
-          <option value="" disabled selected>Trier</option>
-          <option value="">Date</option>
-          <option value="">Nombre de personne</option>
-        </select>
-        <label>Images in select</label>
-      </div>
+        <div id="tri" class="row ">
+          <span class="col m2 offset-m1 btn z-depth-0">{{ knp_pagination_sortable(evenements, 'Titre', 'bp.titre') }} </span>
+          <span class="col m2 offset-m1 btn z-depth-0">{{ knp_pagination_sortable(evenements, 'Date', 'bp.dateDebut') }}</span>
+          <span class="col m2 offset-m1 btn z-depth-0">{{ knp_pagination_sortable(evenements, 'Place', 'bp.place') }}</span>
+        </div>
         <div class="divider"></div>
           {% for evenement in evenements|reverse %}
-           {% if (evenement.dateDebut|date('d M') >= (date().date|date('d-m-Y'))) %}
+            {% if evenement.dateDebut >= date() %}
             <div class="card">
-          <div class="row">
-            <div class="col l3 m3 s12 valign-wrapper">
-              <a href="{{ path('evenement_show', { 'id': evenement.id }) }}"><img src="{{ asset(evenement.getCoverWebPath) }}" alt="" class="scale"></a>
-            </div>
-            <div class="col l5 m5 s12">
-              <h5 class="title">{{ evenement.titre |capitalize }}</h5>
-              <p>{% if evenement.dateDebut %}{{ evenement.dateDebut|date('d M') }}{% endif %} au {% if evenement.dateFin %}{{ evenement.dateFin|date('d M Y') }}{% endif %}<br>
-                 {% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i') }}{% endif %} à {% if evenement.heureFin %}{{ evenement.heureFin|date('H:i') }}{% endif %}<br>
-                 {{ evenement.categorie.nom }}<br>
-                 {{ evenement.place }} places <br>
-                 {{evenement.participants|length }} inscrits <br>
-                 Organsisé par <span class="cyan-text">{{ evenement.utilisateur.prenom|capitalize }}</span>
-              </p>
-            </div>
-            {% if evenement.participants|length == evenement.place %}
-            <div class="col l3 m3 s12 center-align ">
-              <div class="btnpadding">
-                <a href="{{ path('evenement_show', { 'id': evenement.id }) }}" class="btn">Voir</a>
-              </div class="btnpadding" >
-              <div>
-                <a href="{{ path('inscrire', { 'id': evenement.id }) }}" class="btn disabled">S'inscrire</a>
+              <div class="row">
+                <div class="col l4 m4 s12 valign-wrapper">
+                  <a href="{{ path('evenement_show', { 'id': evenement.id }) }}"><img src="{{ asset(evenement.getCoverWebPath) }}" alt="" class="scale" style="height: 12em"></a>
+                </div>
+                <div class="col l4 m4 s12">
+                  <h5 class="title">{{ evenement.titre |capitalize }}</h5>
+                  <p>{{ evenement.dateDebut|date('d M Y') }} à {{ evenement.utilisateur.ville |capitalize}}<br>
+                     {% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i') }}{% endif %} à {% if evenement.heureFin %}{{ evenement.heureFin|date('H:i') }}{% endif %}<br>
+                     {{ evenement.categorie.nom }}<br>
+                     {{ evenement.place }} places <br>
+                     {{evenement.participants|length }} inscrits <br>
+                     Organsisé par <span class="cyan-text">{{ evenement.utilisateur.prenom|capitalize }}</span>
+                  </p>
+                </div>
+                {% if evenement.participants|length == evenement.place %}
+                <div class="col l3 m3 s12 center-align ">
+                  <div class="btnpadding">
+                    <a href="{{ path('evenement_show', { 'id': evenement.id }) }}" class="btn">Voir</a>
+                  </div>
+                  <div style="padding-top:20px;">
+                    <a href="{{ path('inscrire', { 'id': evenement.id }) }}" class="btn disabled">Complet</a>
+                  </div>
+                  </div>
+                {% elseif evenement.dateDebut <= date() %}
+                <div class="col l3 m3 s12 center-align ">
+                  <div class="btnpadding">
+                      <a href="{{ path('evenement_show', { 'id': evenement.id }) }}" class="btn">Voir</a>
+                  </div>
+                  <div style="padding-top:20px;">
+                    <a href="{{ path('inscrire', { 'id': evenement.id }) }}" class="btn disabled">Terminé</a>
+                  </div>
+                </div>
+                {% else %}
+                <div class="col l3 m3 s12 center-align ">
+                  <div class="btnpadding">
+                      <a href="{{ path('evenement_show', { 'id': evenement.id }) }}" class="btn">Voir</a>
+                  </div>
+                  <div style="padding-top:20px;">
+                    <a href="{{ path('inscrire', { 'id': evenement.id }) }}" class="btn">S'inscrire</a>
+                  </div>
+                </div>
+                {% endif %}
               </div>
-            </div>
           </div>
-          {% else %}
-          <div class="col l3 m3 s12 center-align ">
-            <div class="btnpadding">
-              <a href="{{ path('evenement_show', { 'id': evenement.id }) }}" class="btn">Voir</a>
-            </div class="btnpadding" >
-            <div>
-              <a href="{{ path('inscrire', { 'id': evenement.id }) }}" class="btn">S'inscrire</a>
-            </div>
-          </div>
-        </div>
-          {% endif %}
-
-          </div>
-{% endif %}
+            {% endif %}
           {% endfor %}
-          <div class="">
-            <ul class="pagination">
-              <li class="waves-effect btn">{{ knp_pagination_render(evenements) }}</li>
-            </ul>
+          <div>
+            {{ knp_pagination_render(evenements) }}
           </div>
       </div>
     </div>
   </div>
+</div>
 
 {% endblock %}
 
@@ -161,8 +153,28 @@ input{
 }
 .btnpadding{
   padding-top:40px;
-  padding-bottom:20px;
 
+
+}
+
+#tri span{
+  background-color: white;
+  border: 1px solid #ff9800;
+  color:#ff9800;
+
+}
+
+#tri a{
+color:#ff9800;
+}
+
+#tri span:hover{
+background-color: #ff9800;
+color:white;
+}
+
+#tri a.sortable:hover{
+color:white;
 }
 
 .intro-text {
@@ -186,26 +198,6 @@ input{
   $(document).ready(function(){
   $('select').material_select();
    $('.parallax').parallax();
-   $('input.autocomplete').autocomplete({
-    data: {
-      "Vide-dressing": null,
-      "Vide-grenier": null,
-      "Jeux vidéo": 'https://placehold.it/250x250',
-      "Puériculture": null,
-      "Jeux ou jouets": null,
-      "Fournitures de bureau": null,
-      "Ameublement": null,
-      "Electromenager": null,
-      "Linde de maison": null
-    },
-    limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-    onAutocomplete: function(val) {
-      // Callback function when value is autcompleted.
-    },
-    minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
-  });
-
-
 
     $('.datepicker').pickadate({
   defaultDate: '01-01-2017',
@@ -232,7 +224,7 @@ input{
   clear: 'Effacer',
   close: 'Fermer',
   //The format to show on the `input` element
-  format: 'd-m-yy',
+  format: 'd mmm yyyy',
   });
 
 });

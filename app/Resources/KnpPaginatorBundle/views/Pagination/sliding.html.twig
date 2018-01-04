@@ -1,0 +1,29 @@
+{# default Sliding pagination control implementation #}
+
+{% if pageCount > 1 %}
+<ul class="pagination">
+
+
+    {% if previous is defined %}
+
+    {% endif %}
+
+    {% for page in pagesInRange %}
+    
+        {% if page != current %}
+            <li class="page">
+                <a class=" waves-effect btn active white-text" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+            </li>
+        {% else %}
+            <li ><a class="current waves-effect btn disabled">{{ page }}</a></li>
+        {% endif %}
+
+    {% endfor %}
+
+    {% if next is defined %}
+        <li class="next">
+            <a class=" waves-effect btn" href="{{ path(route, query|merge({(pageParameterName): next})) }}">&gt;</a>
+        </li>
+    {% endif %}
+</ul>
+{% endif %}

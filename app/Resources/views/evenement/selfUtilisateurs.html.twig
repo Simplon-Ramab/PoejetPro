@@ -1,0 +1,57 @@
+
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div id="monprofil">
+    <h4 >Mon profil</h4>
+    <a class="btn " href="{{ path('evenement_new') }}">Ajouter un videhome</a>
+    {% for utilisateur in utilisateurs %}
+     {% if app.user == true %}
+         <div class="divider"></div>
+      <div class="row">
+        <div class="col s12 m8 offset-m1">
+          <div class="card cyan white-text">
+            <div class="card-content white-text ">
+              <div class="row">
+                <div class="col s12 m4 ">
+                  <i class="large material-icons valign-wrapper" style="font-size:9em;">assignment_ind</i>
+                </div>
+                <div class="col s12 m8 left-align">
+              <p style="font-size: 1.5em">Nom:<a class="white-text"href="{{ path('utilisateur_show', { 'id': utilisateur.id }) }}">{{ app.user.username|capitalize }}</p>
+              <p style="font-size: 1.5em"> Prénom:{{ utilisateur.nom|capitalize }}</a></p>
+              <p style="font-size: 1.5em">Date d'inscription: {{ utilisateur.dateInscription|date('d M Y') }}</p>
+              <p style="font-size: 1.5em">Email: {{ app.user.email }}</p>
+              </div>
+            </div>
+          </div>
+            <div class="card-action white center-align">
+              <a href="{{ path('utilisateur_edit', { 'id': utilisateur.id}) }}">Modifier</a>
+              <a href="{{ path('utilisateur_delete', { 'id': utilisateur.id }) }}">Supprimer</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+          {% endif %}
+        {% endfor %}
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+  <script >
+
+
+  </script>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+
+#footniv1{
+  display: none
+}
+
+
+</style>
+{% endblock %}

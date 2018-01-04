@@ -5,7 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Utilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Utilisateur controller.
@@ -16,7 +18,7 @@ class UtilisateurController extends Controller
 {
     /**
      * Lists all utilisateur entities.
-     *
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/", name="utilisateur_index")
      * @Method("GET")
      */
@@ -31,9 +33,10 @@ class UtilisateurController extends Controller
         ));
     }
 
+
     /**
      * Creates a new utilisateur entity.
-     *
+     * @Security("has_role('ROLE_USER')")
      * @Route("/new", name="utilisateur_new")
      * @Method({"GET", "POST"})
      */
@@ -59,7 +62,7 @@ class UtilisateurController extends Controller
 
     /**
      * Finds and displays a utilisateur entity.
-     *
+     * @Security("has_role('ROLE_USER')")
      * @Route("/{id}", name="utilisateur_show")
      * @Method("GET")
      */
@@ -100,7 +103,7 @@ class UtilisateurController extends Controller
 
     /**
      * Deletes a utilisateur entity.
-     *
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/{id}", name="utilisateur_delete")
      * @Method("DELETE")
      */

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for evenement in evenements|reverse %}
+    <p>{{ evenement.dateDebut|date('d M Y') }} à {{ evenement.utilisateur.ville |capitalize}}<br>
+       {% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i') }}{% endif %} à {% if evenement.heureFin %}{{ evenement.heureFin|date('H:i') }}{% endif %}<br>
+       {{ evenement.categorie.nom }}<br>
+       {{ evenement.place }} places <br>
+
+       {{evenement.participants|length }} inscrits <br>
+       Organsisé par <span class="cyan-text">{{ evenement.utilisateur.prenom|capitalize }}</span>
+    </p>
+    {% endfor %}
+
+{% endblock %}

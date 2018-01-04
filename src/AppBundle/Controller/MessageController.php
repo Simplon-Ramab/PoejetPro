@@ -5,7 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Message controller.
@@ -16,7 +18,7 @@ class MessageController extends Controller
 {
     /**
      * Lists all message entities.
-     *
+     * @Security("has_role('ROLE_USER')")
      * @Route("/", name="message_index")
      * @Method("GET")
      */
@@ -33,7 +35,7 @@ class MessageController extends Controller
 
     /**
      * Creates a new message entity.
-     *
+     * @Security("has_role('ROLE_USER')")
      * @Route("/new", name="message_new")
      * @Method({"GET", "POST"})
      */
@@ -59,7 +61,7 @@ class MessageController extends Controller
 
     /**
      * Finds and displays a message entity.
-     *
+     * @Security("has_role('ROLE_USER')")
      * @Route("/{id}", name="message_show")
      * @Method("GET")
      */
@@ -75,7 +77,7 @@ class MessageController extends Controller
 
     /**
      * Displays a form to edit an existing message entity.
-     *
+     * @Security("has_role('ROLE_USER')")
      * @Route("/{id}/edit", name="message_edit")
      * @Method({"GET", "POST"})
      */

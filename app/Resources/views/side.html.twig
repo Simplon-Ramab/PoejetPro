@@ -1,0 +1,14 @@
+
+<ul id="slide-out" class="side-nav fixed cyan-text">
+    <li>
+        <div class="panel">
+            <h4 class="white cyan-text ">{{app.user.prenom |capitalize}}</h4>
+        </div>
+    </li>
+    <li><a href="{{ path('monprofil') }}">Mes informations</a></li>
+    <li><a href="{{ path('mesevents') }}" id="mesevents">Mes videhomes</a></li>
+    <li><a href="{{ path('evenement_index') }}">Mes inscriptions</a></li>
+    <li><a href="{{ path('fos_user_security_logout') }}">Deconnexion</a></li>
+    <li><a class="btn white cyan-text" href="/">Revenir à l'accueil</a></li>
+</ul>
+<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>

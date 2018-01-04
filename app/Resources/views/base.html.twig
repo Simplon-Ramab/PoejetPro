@@ -4,23 +4,35 @@
         <meta charset="UTF-8" />
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+        <link rel="stylesheet" href="{{asset('css/materialize.css')}}">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="{{asset('js/materialize.js')}}"></script>
+        <link rel="stylesheet" href="{{asset('fonts/roboto/Roboto-Medium.woff')}}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>{% block title %}VideHome{% endblock %}</title>
         {% block stylesheets %}
 
       {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('apple-touch-icon.png') }}" />
     </head>
     <body>
         {% include 'header.html.twig' %}
-
-        {% block body %}{% endblock %}
-
+        <div class="container-fluid">
+                {% block body %}
+                <div class="row">
+                    <div class="col m3 ">
+                        {% block side %}
+                            {% include 'side.html.twig'%}
+                        {% endblock %}
+                    </div>
+                    <div class="col m9 ">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </div>
+              {% endblock %}
+          </div>
         {% include 'footer.html.twig' %}
 
         {% block javascripts %}{% endblock %}

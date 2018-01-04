@@ -60,7 +60,7 @@ format: 'd-m-yy',
 
 
 $('.timepicker').pickatime({
-    default: 'Now',
+    default: '01-01-2017',
     twelvehour: false, // change to 12 hour AM/PM clock from 24 hour
     donetext: 'OK',
     cleartext: 'Effacer',
@@ -79,6 +79,10 @@ $('.timepicker').pickatime({
 
 {% block stylesheets %}
 <style>
+
+.card-panel{
+  border: 2px solid #26C6DA;
+}
 
 .picker__date-display
 {

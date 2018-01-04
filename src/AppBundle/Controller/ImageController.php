@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Image controller.
@@ -34,7 +35,7 @@ class ImageController extends Controller
 
     /**
      * Creates a new image entity.
-     *
+     * @Security("has_role('ROLE_USER')")
      * @Route("/new", name="image_new")
      * @Method({"GET", "POST"})
      */
@@ -91,7 +92,7 @@ class ImageController extends Controller
 
     /**
      * Displays a form to edit an existing image entity.
-     *
+     * @Security("has_role('ROLE_USER')")
      * @Route("/{id}/edit", name="image_edit")
      * @Method({"GET", "POST"})
      */
@@ -116,7 +117,7 @@ class ImageController extends Controller
 
     /**
      * Deletes a image entity.
-     *
+     * @Security("has_role('ROLE_USER)")
      * @Route("/{id}", name="image_delete")
      * @Method("DELETE")
      */

@@ -6,7 +6,9 @@ use AppBundle\Entity\Commentaire;
 use AppBundle\Entity\Utilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Commentaire controller.
@@ -34,7 +36,7 @@ class CommentaireController extends Controller
 
     /**
      * Creates a new commentaire entity.
-     *
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/new", name="commentaire_new")
      * @Method({"GET", "POST"})
      */

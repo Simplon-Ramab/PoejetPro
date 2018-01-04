@@ -21,7 +21,6 @@ class EvenementController extends Controller
 {
     /**
      * Lists all evenement entities.
-     *
      * @Route("/", name="evenement_index")
      * @Method("GET")
      */
@@ -29,14 +28,55 @@ class EvenementController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $listeEvenements = $em->getRepository('AppBundle:Evenement')->findAll();
-        $evenements  = $this->get('knp_paginator')->paginate(
-        $listeEvenements,
-        $request->query->get('page', 1)/*le numéro de la page à afficher*/,
-          10/*nbre d'éléments par page*/
+        //$listeEvenements = $em->getRepository('AppBundle:Evenement')->findAll();
+        $queryBuilder = $em->getRepository('AppBundle:Evenement')->createQueryBuilder('bp');
+        if ($request->query->getAlnum('filter')) {
+          $queryBuilder->where('bp.titre LIKE :titre')->setParameter('titre', '%' . $request->query->getAlnum('filter') . '%')
+                       ->orWhere('bp.description LIKE :description')->setParameter('description', '%' . $request->query->getAlnum('filter') . '%');
+
+          }
+
+        $query = $queryBuilder->getQuery();
+        $paginator  = $this->get('knp_paginator');
+        $evenements  = $paginator->paginate(
+        $query,
+        $request->query->get('page', 1)/*le numéro de la page à afficher*/,10/*nbre d'éléments par page*/
     );
 
         return $this->render('evenement/index.html.twig', array(
+            'evenements' => $evenements,
+        ));
+    }
+
+    /**
+     * Lists all utilisateur entities.
+     * @Security("has_role('ROLE_USER')")
+     * @Route("/monprofil", name="monprofil")
+     * @Method("GET")
+     */
+    public function personAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $utilisateurs = $em->getRepository('AppBundle:Utilisateur')->findById($user->getId());
+
+        return $this->render('evenement/selfUtilisateurs.html.twig', array(
+            'utilisateurs' => $utilisateurs,
+        ));
+    }
+
+    /**
+     * Lists all evenements entities by user.
+     * @Security("has_role('ROLE_USER')")
+     * @Route("/mesevents", name="mesevents")
+     * @Method("GET")
+     */
+    public function selfAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $evenements= $user->getEvenements();
+        return $this->render('evenement/selfEvenements.html.twig', array(
             'evenements' => $evenements,
         ));
     }
@@ -86,7 +126,6 @@ class EvenementController extends Controller
 
     /**
      * Finds and displays a evenement entity.
-     *
      * @Route("/{id}", name="evenement_show")
      * @Method("GET")
      */
@@ -115,7 +154,7 @@ class EvenementController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('evenement_edit', array('id' => $evenement->getId()));
+            return $this->redirectToRoute('evenement_show', array('id' => $evenement->getId()));
         }
 
         return $this->render('evenement/edit.html.twig', array(
@@ -185,7 +224,7 @@ class EvenementController extends Controller
              count($evenement->getParticipants()) <= $evenement->getPlace()) {
              $em = $this->getDoctrine()->getManager();
              $em->flush();
-             return $this->redirectToRoute('evenement_index');
+             return $this->redirectToRoute('evenement_show', array('id' => $evenement->getId()));
          }
          return $this->render('evenement/show_add_event.html.twig', array(
              'evenements' => $evenement,
@@ -217,7 +256,7 @@ class EvenementController extends Controller
               count($evenement->getParticipants()) <= $evenement->getPlace()) {
               $em = $this->getDoctrine()->getManager();
               $em->flush();
-              return $this->redirectToRoute('evenement_index');
+              return $this->redirectToRoute('evenement_show', array('id' => $evenement->getId()));
           }
           return $this->render('evenement/show_remove_event.html.twig', array(
               'evenements' => $evenement,
@@ -229,7 +268,6 @@ class EvenementController extends Controller
 
       /**
        * Lists all categorie entities.
-       *
        * @Route("/", name="recherche_index")
        * @Method("GET")
        */

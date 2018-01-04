@@ -3,98 +3,120 @@
 {% block body %}
 
 <div class="slider z-depth-2">
-    <ul class="slides">
-      <li>
-        <img src="{{ asset('images/livingroom.jpg') }}" > <!-- random image -->
-        <div class="caption center-align">
-          <h3 class="white grey-text text-darken-3">Vider ou remplir votre appartement!</h3>
-          <a href="{{ path('evenement_new') }}" class="btn">Créer un événement</a>
-        </div>
-      </li>
-      <li>
-        <img src="{{ asset('images/shopping.jpg') }}"> <!-- random image -->
-        <div class="caption center-align">
-          <h3 class="white grey-text text-darken-3">Discuter, négocier, échanger</h3>
-          <a href="{{ path('evenement_new') }}" class="btn">Créer un événement</a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <div class='scrolltop'>
-    <div class='scroll btn-floating btn-large cyan' ><i class="large material-icons cyan">keyboard_capslock</i></div>
+  <ul class="slides">
+    <li>
+      <img src="{{ asset('images/livingroom.jpg') }}" > <!-- random image -->
+      <div class="caption center-align">
+        <h3 class="white grey-text text-darken-3">Vider ou remplir votre appartement!</h3>
+        <a href="{{ path('evenement_new') }}" class="btn">Créer un événement</a>
+      </div>
+    </li>
+    <li>
+      <img src="{{ asset('images/shopping.jpg') }}"> <!-- random image -->
+      <div class="caption center-align">
+        <h3 class="white grey-text text-darken-3">Discuter, négocier, échanger</h3>
+        <a href="{{ path('evenement_new') }}" class="btn">Créer un événement</a>
+      </div>
+    </li>
+  </ul>
 </div>
-
-  <div class="divider"></div>
-    <div class="section">
-  <h4 class="center-align">Prochaines dates</h4>
+<div class="divider"></div>
+<div class="section">
+  <h3 class="center-align">Prochaines dates</h3>
   <div class="divider"></div>
   <div id="wrapper">
     <div class="container">
       <div class="row">
-        {% for evenement in evenements|reverse  %}
-
-        <!--|slice(1, 4)-->
-        <div class="col s12 m4">
-      <div class="card" style="height: 28em">
-        <div class="card-image">
-          <img src="{{evenement.getCoverWebPath}}">
-          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-        </div>
-        <div class="card-content">
-          <h6>{{ evenement.titre}}</h6>
-          <h6>{{ evenement.dateDebut|date('d M Y') }}</h6>
-          <p>de {% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i:s') }}{% endif %} à {% if evenement.heureFin %}{{ evenement.heureFin|date('H:i:s') }}{% endif %}</p>
-          <p>à {{ evenement.utilisateur.ville |capitalize}}</p>
-          <p>Catégorie: {{ evenement.categorie.nom }}</p>
-            {% if  evenement.place <= evenement.participants|length  %}
-            <p>Places disponibles: <span class=" badge green white-text">Complet</span></p>
-            {% else %}
-          <p>Places disponibles: {{ evenement.place - evenement.participants|length }}</p>
+        {% for evenement in evenements|reverse|slice(1,8)  %}
+        {% if evenement.dateDebut >= date() %}
+          <div class="col s12 m3">
+            <div class="card " style="height: 22em">
+              <div class="card-image">
+                <img src="{{evenement.getCoverWebPath}}" style="height: 10em">
+                <a class="btn-floating halfway-fab waves-effect waves-light red" href="{{ path('evenement_show', { 'id': evenement.id }) }}"><i class="material-icons">visibility</i></a>
+              </div>
+              <div class="card-content">
+                <h5>{{ evenement.titre |capitalize}}</h5>
+                <h6>{{ evenement.dateDebut|date('d M Y') }} à {{ evenement.heureDebut|date('H:i') }}</h6>
+                <p>{{ evenement.categorie.nom }} à {{ evenement.utilisateur.ville |capitalize}}</p>
+                {% if  evenement.place <= evenement.participants|length  %}
+                <p><span class=" badge green white-text">Complet</span></p>
+                {% else %}
+                <p>{{ evenement.place - evenement.participants|length }} places disponibles</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
             {% endif %}
-          <p>Organisateur: <span class="cyan-text">{{ evenement.utilisateur.prenom |capitalize}}</span></p>
-        </div>
-      </div>
-    </div>
         {% endfor %}
       </div>
-
-
-    </div>
+      <a href="{{ path('evenement_index')}}" class="cyan-text" style="font-size:2em">Tout afficher...</a>
     </div>
   </div>
-  <div class="divider"></div>
-  <div class="section">
-<h4 class="center-align">Bientôt complet</h4>
-<div id="wrapper">
-  <div class="container">
-    <div class="row">
-      {% for evenement in evenements|reverse  %}
-      {% if  evenement.place - evenement.participants|length < 5 %}
-      <!--|slice(1, 4)-->
-      <div class="col s12 m4">
-    <div class="card" style="height: 28em">
-      <div class="card-image">
-        <img src="{{evenement.getCoverWebPath}}">
-        <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-      </div>
-      <div class="card-content">
-        <h5>{{ evenement.dateDebut|date('d M Y') }}</h5>
-        <p>de {% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i:s') }}{% endif %} à {% if evenement.heureFin %}{{ evenement.heureFin|date('H:i:s') }}{% endif %}</p>
-        <p>à {{ evenement.utilisateur.ville |capitalize}}</p>
-        <p>Catégorie: {{ evenement.categorie.nom }} </p>
-        <p>Place disponibles: <span class=" badge red white-text">{{ evenement.place - evenement.participants|length }}</span></p>
-        <p>Organisateur: <span class="cyan-text">{{ evenement.utilisateur.prenom |capitalize}}</span></p>
-      </div>
-    </div>
-  </div>
-  {% endif %}
-      {% endfor %}
-    </div>
+</div>
 
-
-  </div>
-  </div>
 <div class="divider"></div>
+<div class="section">
+  <h3 class="center-align">Bientôt complet</h3>
+    <div class="divider"></div>
+  <div id="wrapper">
+    <div class="container">
+      <div class="row">
+        {% for evenement in evenements %}
+        {% if  evenement.dateDebut >= date() and evenement.place - evenement.participants|length > 0 and evenement.place - evenement.participants|length < 5  %}
+        <!--|slice(1, 4)-->
+        <div class="col s12 m3">
+          <div class="card" style="height: 22em">
+            <div class="card-image">
+              <img src="{{evenement.getCoverWebPath}}" style="height: 10em">
+              <a class="btn-floating halfway-fab waves-effect waves-light red" href="{{ path('evenement_show', { 'id': evenement.id }) }}"><i class="material-icons">visibility</i></a>
+            </div>
+            <div class="card-content">
+              <h6>{{ evenement.titre |capitalize}}</h6>
+              <h6>{{ evenement.dateDebut|date('d M Y') }} à {{ evenement.heureDebut|date('H:i') }}</h6>
+              <p>{{ evenement.categorie.nom }} à {{ evenement.utilisateur.ville |capitalize}}</p>
+              <p>Place dispo: <span class=" badge red white-text">{{ evenement.place - evenement.participants|length }}</span></p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <h3 class="center-align">Videhomes terminés</h3>
+      <div class="divider"></div>
+    <div id="wrapper">
+      <div class="container">
+        <div class="row">
+          {% for evenement in evenements|slice(1, 11)|sort  %}
+            {% if evenement.dateDebut <= date() %}
+          <!--|slice(1, 4)-->
+          <div class="col s12 m3">
+            <div class="card" style="height: 22em">
+              <div class="card-image">
+                <img src="{{evenement.getCoverWebPath}}" style="height: 10em">
+                <a class="btn-floating halfway-fab waves-effect waves-light red" href="{{ path('evenement_show', { 'id': evenement.id }) }}"><i class="material-icons">visibility</i></a>
+              </div>
+              <div class="card-content">
+                <h6>{{ evenement.titre |capitalize}}</h6>
+                <h6>{{ evenement.dateDebut|date('d M Y') }} à {{ evenement.heureDebut|date('H:i') }}</h6>
+                <p>{{ evenement.categorie.nom }} à {{ evenement.utilisateur.ville |capitalize}}</p>
+                <p class="cyan-text">Terminé</p>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+  </div>
+</div>
+<div class='scrolltop'>
+  <div class='scroll btn-floating btn-large cyan' ><i class="large material-icons cyan">keyboard_capslock</i></div>
 </div>
 
 

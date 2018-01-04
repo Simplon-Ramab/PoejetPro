@@ -1,55 +1,85 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block content %}
-    <h4 >Mes evenements</h4>
+<div id="mesvidehomes">
 
-        {% for evenement in evenements|reverse %}
-          <div class="card">
-        <div class="row">
-          <div class="col l3 m3 s12">
-            <a href="{{ path('evenement_show', { 'id': evenement.id }) }}"><img src="{{ asset(evenement.getCoverWebPath) }}" alt="" class="scale"></a>
-          </div>
-          <div class="col l6 m6 s12">
-            <h5 class="title">{{ evenement.titre |capitalize }}</h5>
-            <p>{% if evenement.dateDebut %}{{ evenement.dateDebut|date('d M') }}{% endif %} au {% if evenement.dateFin %}{{ evenement.dateFin|date('d M Y') }}{% endif %}<br>
-               {% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i') }}{% endif %} à {% if evenement.heureFin %}{{ evenement.heureFin|date('H:i') }}{% endif %}<br>
-               {{ evenement.categorie.nom }}<br>
-               {{ evenement.utilisateur.prenom }}<br>
-               {{ evenement.place }}
-            </p>
-          </div>
-          <div class="col l1 m1 s12">
-            <div class="btnpadding">
-              <a href="{{ path('evenement_show', { 'id': evenement.id }) }}" class="btn">Voir</a>
-            </div class="btnpadding" >
-            <div>
-              <a href="#" class="btn">S'inscrire</a>
-            </div>
-          </div>
-        </div>
+  <h4 >Mes videhomes</h4>
+   {% if evenements is not empty  %}
+    <a class="btn " href="{{ path('evenement_new') }}">Ajouter un videhome</a>
+    <table class="responsive-table highlight">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>organisateur</th>
+                <th>Date debut</th>
+                <th>Catégorie</th>
+                <th>Nombre de place</th>
+                <th>Nombre d'inscrit</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
 
-        </div>
-        {% endfor %}
+        {% for evenement in evenements %}
+         {% if evenement.utilisateur == app.user %}
+            <tr>
+                <td><a href="{{ path('evenement_show', { 'id': evenement.id }) }}">{{ evenement.titre }}</a></td>
+                <td>{{ evenement.utilisateur.prenom}}</td>
+                <td >{{ evenement.dateDebut|date('d M Y')  }}</td>
+                <td> {{ evenement.categorie.nom }}<br></td>
+                <td >{{ evenement.dateFin|date('d M Y')  }}</td>
+                <td >{{ evenement.place}}</td>
+                <td>
                   <a class='dropdown-button btn' href='#' data-activates='dropdown1'>Actions</a>
                     <ul id='dropdown1' class='dropdown-content'>
                         <li>
-                            <a href="{{ path('evenement_show', { 'id': evenement.id }) }}">Voir</a>
+                          <a href="{{ path('evenement_show', { 'id': evenement.id }) }}">Voir</a>
                         </li>
-
                         <li>
-                            <a href="{{ path('evenement_edit', { 'id': evenement.id }) }}">Modifier</a>
+                          <a href="{{ path('evenement_edit', { 'id': evenement.id }) }}">Modifier</a>
                         </li>
-                            <li>
-                              {#<a href="{{ path('evenement_delete', { 'id': evenement.id }) }}">Emprunter</a>#}
-                            </li>
+                        <li>
+                          <a href="{{ path('evenement_delete', { 'id': evenement.id }) }}">Supprimer</a>
+                        </li>
                     </ul>
+                </td>
+            </tr>
 
-    <ul>
-        <li>
-            <a class="btn pink darken-1" href="{{ path('evenement_new') }}">Ajouter un evenement</a>
-        </li>
-    </ul>
+          {% endif %}
 
+        {% endfor %}
+        </tbody>
+    </table>
+      {% else %}
+      <div class="divider"></div>
+      <div class="divider"></div>
+      <div class="center-align cyan">
+      <h5 class="center-align white-text">Vous n'avez pas encore créé un videhome</h5>
+      </div>
+      <div class="center-align">
+      <a class="btn" href="{{ path('evenement_new') }}">Créer un videhome</a>
+  </div>
+  {% endif %}
+
+    </div>
+
+
+  {% endblock %}
+
+  {% block javascripts %}
+    <script >
+
+
+    </script>
+  {% endblock %}
+
+  {% block stylesheets %}
+  <style>
+
+  #footniv1{
+    display: none
+  }
+
+
+  </style>
   {% endblock %}

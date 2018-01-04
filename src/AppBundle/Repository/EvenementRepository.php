@@ -10,13 +10,9 @@ namespace AppBundle\Repository;
  */
 class EvenementRepository extends \Doctrine\ORM\EntityRepository
 {
-  public function findEvenementsBytitre($motcle){
-    $query = $this ->createQueryBuilder('f')
-      ->where('f.nom like :nom')
-      ->setParameter('nom', $motscle. '%')
-      ->orderBy('f.nom', 'ASC')
-      ->getQuery();
+  public function createFindAllQuery()
+      {
+          return $this->_em->getRepository('AppBundle:Evenement')->createQueryBuilder('bp');
+      }
 
-      return $query->getResult();
-  }
 }

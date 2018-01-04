@@ -4,75 +4,56 @@
 
 <div class="container">
   <div class="divider"></div>
-  <div class="col s12 m11 l11">
-  <div class="divider"></div>
-    <h3 class="center-align">{{ evenement.titre | capitalize}} du {% if evenement.dateDebut %}{{ evenement.dateDebut|date('d-m-Y') }}{% endif %}</h3>
-    <hr>
     <div class="divider"></div>
-    <div class="row">
-      <div class="col m11">
-        <div class="">
-          <img src="{{ asset(evenement.getCoverWebPath) }}" class="materialboxed" />
-        </div>
+      <h3 class="center-align">{{ evenement.titre | capitalize}} du {% if evenement.dateDebut %}{{ evenement.dateDebut|date('d-m-Y') }}{% endif %}</h3>
+      <hr>
+      <div class="divider"></div>
+      <div class=" center-align">
+        <img src="{{ asset(evenement.getCoverWebPath) }}" class="materialboxed" style="height: 30em"/>
       </div>
-    </div>
-    <div class="divider"></div>
+      <div class="divider"></div>
         <h3 class="center-align">Informations</h3>
         <hr>
-          <div class="divider"></div>
+        <div class="divider"></div>
         <div class="row">
           <div class="col s12 m7 l7 card">
             <p>{{ evenement.description|raw }}</p>
           </div>
-
-
           <div class="col s12 m4 l4 card offset-m1 offset-l1">
-
             <p>Date: {% if evenement.dateDebut %}{{ evenement.dateDebut|date('d-m-Y') }}{% endif %} au {% if evenement.dateFin %}{{ evenement.dateFin|date('d-m-Y ') }}{% endif %}</p>
             <p>Horaire: {% if evenement.heureDebut %}{{ evenement.heureDebut|date('H:i:s') }}{% endif %} - {% if evenement.heureFin %}{{ evenement.heureFin|date('H:i:s') }}{% endif %}</p>
             <p>Ville: {{ evenement.utilisateur.ville |capitalize}}</p>
             <p>Catégorie: {{ evenement.categorie.nom }}</p>
             <p>Nombre de participants: {{ evenement.place }}</p>
-            <p>Nombre place disponibles: {{ evenement.place - evenement.participants|length }}</p>
+            <p>Nombre d'inscrits: {{ evenement.participants|length }}</p>
             <p>Organisateur: <span class="cyan-text">{{ evenement.utilisateur.prenom |capitalize}}</span></p>
             <div class="row ">
               <div class="center-align">
                 {% if evenement.isRegistered(app.user) == true %}
-                <p class =" white-text cyan" >vous êtes déja inscrit</p>
+                  <p class =" white-text cyan" >vous êtes déja inscrit</p>
                   <a href="{{ path('desinscrire', { 'id': evenement.id }) }}" class="btn">Se desinscrire</a>
-                  {% else %}
-                 <a href="{{ path('inscrire', { 'id': evenement.id }) }}" class="btn">S'inscrire</a>
-                  {% endif %}
-                </div>
+                {% elseif evenement.place == evenement.participants|length  %}
+                  <a class="btn disabled">Complet</a>
+                {% elseif evenement.dateDebut <= date() %}
+                  <a class="btn disabled">Terminé</a>
+                {% else %}
+                  <a href="{{ path('inscrire', { 'id': evenement.id }) }}" class="btn">S'inscrire</a>
+                {% endif %}
+              </div>
             </div>
           </div>
-
         </div>
-        <div class="divider"></div>
-        <h3 class="center-align">Commentaires</h3>
-        <h3>Laissez un message</h3>
-
-         <div class="divider"> </div>
-
-        <hr>
-
-        <a href="{{ path('evenement_new') }}" class="btn">Créer un événement</a>
-
-
-
-</div>
-</div>
-
+        <div class="center-align">
+          <a href="{{ path('evenement_new') }}" class="btn">Créer un événement</a>
+        </div>
+      </div>
 
 {% endblock %}
 
 {% block stylesheets %}
 <style>
 
-img {
-  width:100%;
-  padding-top:10px;
-}
+
 .card p{
   overflow-wrap: break-word;
 }

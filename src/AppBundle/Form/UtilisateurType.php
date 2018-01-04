@@ -16,8 +16,14 @@ class UtilisateurType extends AbstractType
         $builder
         ->add('nom')
         ->add('prenom')
-        ->add('dateInscription')
-        ->add('telephone');
+        ->add('telephone')
+        ->add('ville')
+        ->add('numero')
+        ->add('nomrue')
+        ->add('codePostal')
+        ->add('ville')
+        ->add('pays');
+
     }
 
     /**

@@ -1,51 +1,50 @@
 
 {% block header %}
-<div class="navbar">
-  <nav class="transparent z-depth-0">
-    <div class="nav-wrapper container-fluid">
-      <a href="/" class="brand-logo"><img src="{{ asset('images/videhomelogo.png') }}" ></a>
-      <a href="#" data-activates="mobile-demo" class="button-collapse cyan-text"><i class="material-icons">menu</i></a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        <li class="col md 3"><a href="{{ path('evenement_index') }}">VideHome</a></li>
-            <!--{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |-->
-            <li class="col md 3"><a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user" aria-hidden="true"></i>
-              {{ 'Mon compte'|trans({}, 'FOSUserBundle') }}
-            </a></li>
-            <li class="col md 3"><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>
-              {{ 'Deconnexion'|trans({}, 'FOSUserBundle') }}
-            </a></li>
-        {% else %}
-            <li class="col md 3"><a href="{{ path('evenement_index') }}">VideHome</a></li>
-            <li class="col md 3"><a href="{{ path('fos_user_security_login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i>
+
+  <div class="navbar">
+    <nav class="transparent z-depth-0">
+      <div class="nav-wrapper container-fluid">
+        <a href="/" class="brand-logo"><img src="{{ asset('images/videhomelogo.png') }}" ></a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse cyan-text"><i class="material-icons">menu</i></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+          <li class="col md 3"><a href="{{ path('evenement_index') }}">VideHomes</a></li>
+              <!--{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |-->
+              <li class="col md 3"><a href="{{ path('mesevents') }}"><i class="fa fa-user" aria-hidden="true"></i>
+                Mon compte
+              </a></li>
+              <li class="col md 3"><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>
+                {{ 'Deconnexion'|trans({}, 'FOSUserBundle') }}
+              </a></li>
+          {% else %}
+              <li class="col md 3"><a href="{{ path('evenement_index') }}">VideHomes</a></li>
+              <li class="col md 3"><a href="{{ path('fos_user_security_login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i>
+                Connexion</a></li>
+              <li><a href="{{ path('fos_user_registration_register') }}"><i class="fa fa-user-plus" aria-hidden="true"></i>
+                Inscription</a></li>
+          {% endif %}
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+              <li class="col md 3"><a href="{{ path('evenement_index') }}">VideHomes</a></li>
+              <!--{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |-->
+              <li class="col md 3"><a href="{{ path('mesevents') }}"><i class="fa fa-user" aria-hidden="true"></i>
+                Mon compte
+              </a></li>
+              <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>
+                {{ 'Deconnexion'|trans({}, 'FOSUserBundle') }}
+              </a></li>
+          {% else %}
+            <li><a href="{{ path('evenement_index') }}" class="white-text"></i>VideHomes</a></li>
+            <li><a href="{{ path('fos_user_security_login') }}" class="white-text"><i class="fa fa-sign-in" aria-hidden="true"></i>
               Connexion</a></li>
-            <li><a href="{{ path('fos_user_registration_register') }}"><i class="fa fa-user-plus" aria-hidden="true"></i>
+            <li><a href="{{ path('fos_user_registration_register') }}" class="white-text"><i class="fa fa-user-plus" aria-hidden="true"></i>
               Inscription</a></li>
-        {% endif %}
-      </ul>
-      <ul class="side-nav" id="mobile-demo">
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <li class="col md 3"><a href="{{ path('evenement_index') }}">VideHome</a></li>
-            <!--{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |-->
-            <li class="col md 3"><a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user" aria-hidden="true"></i>
-              {{ 'Mon compte'|trans({}, 'FOSUserBundle') }}
-            </a></li>
-            <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>
-              {{ 'Deconnexion'|trans({}, 'FOSUserBundle') }}
-            </a></li>
-        {% else %}
-          <li><a href="{{ path('evenement_index') }}" class="white-text"></i>VideHome</a></li>
-          <li><a href="{{ path('fos_user_security_login') }}" class="white-text"><i class="fa fa-sign-in" aria-hidden="true"></i>
-            Connexion</a></li>
-          <li><a href="{{ path('fos_user_registration_register') }}" class="white-text"><i class="fa fa-user-plus" aria-hidden="true"></i>
-            Inscription</a></li>
-        {% endif %}
-      </ul>
-    </div>
-  </nav>
-</div>
-
-
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </div>
 
 {% endblock %}
 
@@ -106,14 +105,10 @@ nav .nav-wrapper i{
     height: 0px;
 }
 
-
-
 nav ul a:hover {
   background-color: white;
   color:#26c6da;
-
 }
-
 
 .nav-wrapper {
   padding-left: 5px;

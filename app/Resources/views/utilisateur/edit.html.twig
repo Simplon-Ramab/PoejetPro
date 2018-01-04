@@ -1,21 +1,37 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Utilisateur edit</h1>
+<div class="container">
+
+    <div class="row" style="padding-top: 8em">
+      <div class="col m11 l11 animated bounceInDown">
+        <div class="card-panel hoverable">
+    <h3 class="center-align">Modifier vos informations</h3>
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+        <div class="center-align">
+        <input type="submit" value="Modifier" class="btn "/>
+        <a class="btn cyan" href="{{ path('monprofil') }}">Retour</a>
+        </div>
     {{ form_end(edit_form) }}
+<div class="divider">
 
-    <ul>
-        <li>
-            <a href="{{ path('utilisateur_index') }}">Back to the list</a>
-        </li>
-        <li>
+</div>
+    <div class="center-align">
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+                <input type="submit" value="Delete" class="btn red">
             {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    </div>
+  </div></div>
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+#footniv1{
+  display: none
+}
+
+</style>
 {% endblock %}
